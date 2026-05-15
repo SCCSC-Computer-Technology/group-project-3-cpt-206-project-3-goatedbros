@@ -1,0 +1,91 @@
+﻿@model PantryPlatoonMVCMain.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "User Details";
+}
+
+<h2>User Details</h2>
+
+<div>
+    <h4>@Model.FirstName @Model.LastName</h4>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>Phone:</strong> @Model.PhoneNumber</p>
+    <p><strong>Campus:</strong> @Model.Campus?.CampusName</p>                
+    <p><strong>SCC ID:</strong> @Model.SCCId</p>
+</div>
+
+<hr />
+
+<h3>Visit History</h3>
+@if (Model.Visits != null && Model.Visits.Any())
+{
+    <table id="visitsTable" class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Total Weight</th>
+                <th>Notes</th>
+                <th>Campus</th>
+                <th>Items</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var visit in Model.Visits.OrderByDescending(v => v.VisitDate))
+            {
+                <tr>
+                    <td>@visit.VisitDate.ToString("MM/dd/yyyy")</td>
+                    <td>@visit.TotalWeight lbs</td>
+                    <td>@visit.Notes</td>
+                    <td>@visit.Campus?.CampusName</td>
+                    <td>
+                        @if (visit.VisitItems != null && visit.VisitItems.Any())
+                        {
+                            <ul>
+                                @foreach (var item in visit.VisitItems)
+                                {
+                                    <li>@item.Item?.ItemName - @item.Quantity (@item.Weight lbs)</li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <em>No items recorded</em>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>This user has no recorded visits.</p>
+}
+
+<hr />
+
+<h3>Schedule a Future Pickup</h3>
+<p>
+    <a asp-controller="Visit" asp-action="Create" asp-route-userId="@Model.Id" class="btn btn-primary">
+        Schedule New Pickup
+    </a>
+</p>
+
+<style>
+
+    .dt-input {
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+
+</style>
+
+@section Scripts {
+
+    <script>
+        new DataTable('#visitsTable',{
+            pageLength: 25,
+        });
+    </script>
+
+}

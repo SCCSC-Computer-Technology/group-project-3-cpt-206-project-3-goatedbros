@@ -1,0 +1,404 @@
+﻿@model PantryPlatoonMVCMain.Models.Inventory
+@{
+    ViewData["Title"] = Model.Item?.ItemName ?? "Item Details";
+}
+
+<div class="container py-5">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="row">
+        <!-- Item Image Column -->
+        <div class="col-md-6 mb-4">
+            <div class="item-image-card">
+                @if (!string.IsNullOrEmpty(Model.Item.ImagePath))
+                {
+                    <img src="@Model.Item.ImageUrl" height="450" alt="@Model.Item.ItemName" class="item-image" />
+                }
+                else
+                {
+                    <div class="item-placeholder-large">
+                        <i class="fas fa-box fa-4x text-muted"></i>
+                        <p class="text-muted mt-3">No image available</p>
+                    </div>
+                }
+
+            </div>
+        </div>
+
+        <!-- Item Info Column -->
+        <div class="col-md-6">
+            <div class="item-info-card">
+                <!-- Breadcrumb -->
+                <nav aria-label="breadcrumb" class="mb-3">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a asp-controller="Inventory" asp-action="Index">Available Items</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            @Model.Item?.ItemName
+                        </li>
+                    </ol>
+                </nav>
+
+                <!-- Item Title and Category -->
+                <h1 class="item-title">@Model.Item?.ItemName</h1>
+                <div class="item-category mb-3">
+                    <span class="badge bg-secondary fs-6">
+                        <i class="fas fa-tag"></i> @Model.Item?.ItemCategory?.ItemCategoryName
+                    </span>
+                </div>
+
+                <!-- Availability Status -->
+                <div class="availability-section mb-4">
+                    <div class="availability-badge">
+                        <i class="fas fa-check-circle text-success"></i>
+                        <strong class="text-success">In Stock</strong>
+                    </div>
+                    <div class="availability-details mt-2">
+                        <div class="row text-center">
+                            <div class="col-4">
+                                <div class="stat-box">
+                                    <div class="stat-number">@Model.Quantity</div>
+                                    <div class="stat-label">Available</div>
+                                </div>
+                            </div>
+                            @if (Model.Item?.Weight > 0)
+                            {
+                                <div class="col-4">
+                                    <div class="stat-box">
+                                        <div class="stat-number">@Model.Item.Weight</div>
+                                        <div class="stat-label">lbs each</div>
+                                    </div>
+                                </div>
+                            }
+                            @if (PantryPlatoonMVCMain.Util.GlobalFlags.ShowPoints)
+                            {
+                                @if (Model.Item?.Points > 0)
+                                {
+                                    <div class="col-4">
+                                        <div class="stat-box">
+                                            <div class="stat-number">@Model.Item.Points</div>
+                                            <div class="stat-label">points</div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                @if (!string.IsNullOrEmpty(Model.Item?.Description))
+                {
+                    <div class="item-description mb-4">
+                        <h5>Description</h5>
+                        <p>@Model.Item.Description</p>
+                    </div>
+                }
+
+                <!-- Add to Bag Section -->
+                <div class="add-to-bag-section">
+                    <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                        <input type="hidden" name="itemId" value="@Model.Item?.ItemId">
+
+                        <div class="quantity-selector mb-4">
+                            <label for="quantity" class="form-label fw-bold">How many would you like?</label>
+                            <div class="input-group" style="max-width: 200px;">
+                                <button type="button" class="btn btn-outline-secondary" onclick="decreaseQuantity()">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <input type="number"
+                                       id="quantity"
+                                       name="quantity"
+                                       value="1"
+                                       min="1"
+                                       max="@Model.Quantity"
+                                       class="form-control text-center fw-bold">
+                                <button type="button" class="btn btn-outline-secondary" onclick="increaseQuantity()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                            <small class="text-muted">Maximum: @Model.Quantity available</small>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button type="submit" class="btn btn-add-to-bag btn-lg">
+                                <i class="fas fa-plus"></i> Add to Bag
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="secondary-actions mt-3">
+                        <a asp-controller="Inventory" asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left"></i> Back to All Items
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Additional Info -->
+                <div class="additional-info mt-4">
+                    <div class="info-card">
+                        <h6><i class="fas fa-info-circle text-info"></i> Pantry Guidelines</h6>
+                        <ul class="guidelines-list">
+                            <li>Please take only what you need</li>
+                            <li>Items are provided on a first-come, first-served basis</li>
+                            @if (PantryPlatoonMVCMain.Util.GlobalFlags.ShowPoints)
+                            {
+                                @if (Model.Item?.Points > 0)
+                                {
+                                    <li>This item uses @Model.Item.Points points</li>
+                                }
+                            }
+                        </ul>
+                    </div>
+
+                    @if (Model.LastUpdated.HasValue)
+                    {
+                        <div class="last-updated mt-3">
+                            <small class="text-muted">
+                                <i class="fas fa-clock"></i>
+                                Last restocked: @Model.LastUpdated.Value.ToString("MMMM dd, yyyy")
+                            </small>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Items Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <!--<h4>More items from @Model.Item?.ItemCategory?.ItemCategoryName</h4>-->
+            <hr>
+            <p class="text-muted">
+                <a asp-controller="Inventory" asp-action="Index" class="text-decoration-none">
+                    View all available items →
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .item-image-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        padding: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 450px;
+        text-align: center;
+    }
+
+    .item-placeholder-large {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .item-info-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        padding: 30px;
+        height: fit-content;
+    }
+
+    .item-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: #333;
+        line-height: 1.2;
+    }
+
+    .item-category .badge {
+        padding: 8px 12px;
+    }
+
+    .availability-section {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        border-left: 4px solid #369044;
+    }
+
+    .availability-badge {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+
+    .stat-box {
+        padding: 10px;
+    }
+
+    .stat-number {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #369044;
+    }
+
+    .stat-label {
+        font-size: 0.875rem;
+        color: #6c757d;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .item-description h5 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: #2F3867;
+    }
+
+    .item-description p {
+        color: #555;
+        line-height: 1.6;
+        font-size: 1rem;
+    }
+
+    .add-to-bag-section {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 25px;
+        border: 1px solid #dee2e6;
+    }
+
+    .quantity-selector label {
+        color: #2F3867;
+        font-size: 1rem;
+    }
+
+    .btn-add-to-bag {
+        background-color: #369044;
+        border-color: #369044;
+        color: white;
+        padding: 12px 30px;
+        font-weight: 600;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        font-size: 1.1rem;
+    }
+
+        .btn-add-to-bag:hover {
+            background-color: #33873F;
+            border-color: #33873F;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(54, 144, 68, 0.3);
+            color: white;
+        }
+
+    .info-card {
+        background-color: #e7f3ff;
+        border-radius: 6px;
+        padding: 15px;
+        border-left: 4px solid #0066cc;
+    }
+
+        .info-card h6 {
+            margin-bottom: 10px;
+            color: #2F3867;
+        }
+
+    .guidelines-list {
+        margin-bottom: 0;
+        padding-left: 20px;
+    }
+
+        .guidelines-list li {
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+    .last-updated {
+        text-align: center;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+    }
+
+    .breadcrumb {
+        background-color: transparent;
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    .breadcrumb-item a {
+        color: #369044;
+        text-decoration: none;
+    }
+
+        .breadcrumb-item a:hover {
+            text-decoration: underline;
+        }
+
+    /* Quantity controls */
+    .input-group .btn {
+        border-color: #ced4da;
+    }
+
+        .input-group .btn:hover {
+            background-color: #369044;
+            border-color: #369044;
+            color: white;
+        }
+
+    .form-control:focus {
+        border-color: #369044;
+        box-shadow: 0 0 0 0.2rem rgba(54, 144, 68, 0.25);
+    }
+</style>
+
+<script>
+    function increaseQuantity() {
+        const input = document.getElementById('quantity');
+        const max = parseInt(input.getAttribute('max'));
+        const current = parseInt(input.value);
+
+        if (current < max) {
+            input.value = current + 1;
+        }
+    }
+
+    function decreaseQuantity() {
+        const input = document.getElementById('quantity');
+        const min = parseInt(input.getAttribute('min'));
+        const current = parseInt(input.value);
+
+        if (current > min) {
+            input.value = current - 1;
+        }
+    }
+
+    // Validate manual entry
+    document.getElementById('quantity').addEventListener('input', function() {
+        const max = parseInt(this.getAttribute('max'));
+        const min = parseInt(this.getAttribute('min'));
+        let value = parseInt(this.value);
+
+        if (value > max) {
+            this.value = max;
+        } else if (value < min) {
+            this.value = min;
+        }
+    });
+</script>

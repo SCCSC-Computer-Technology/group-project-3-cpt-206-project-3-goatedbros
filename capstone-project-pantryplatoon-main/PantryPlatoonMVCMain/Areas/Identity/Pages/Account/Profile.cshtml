@@ -1,0 +1,160 @@
+﻿@page
+@model PantryPlatoonMVCMain.Areas.Identity.Pages.Account.ProfileModel
+@{
+    ViewData["Title"] = "My Account";
+}
+
+<div class="account-container">
+    <h1>My Account</h1>
+
+    @if (!string.IsNullOrEmpty(Model.StatusMessage))
+    {
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            @Model.StatusMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card profile-card">
+                <div class="card-header">
+                    <h3>Profile Information</h3>
+                </div>
+                <div class="card-body">
+                    <div class="profile-info">
+                        <p><strong>Name:</strong> @Model.CurrentUser.FirstName @Model.CurrentUser.LastName</p>
+                        <p><strong>SCC ID:</strong> @(Model.CurrentUser.SCCId ?? "Not provided")</p>
+                        <p><strong>Email:</strong> @(Model.CurrentUser.Email ?? "Not provided")</p>
+                        <p><strong>Campus:</strong> @(Model.CurrentUser.Campus?.CampusName ?? "Not assigned")</p>
+                        <p><strong>Phone:</strong> @(Model.CurrentUser.PhoneNumber ?? "Not provided")</p>
+                    </div>
+                    <a href="~/Identity/Account/Manage" class="btn btn-success btn-sm mt-3">Edit Profile</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Visit History -->
+        <div class="col-md-8">
+            <div class="card visit-history-card">
+                <div class="card-header">
+                    <h3>Visit History</h3>
+                </div>
+                <div class="card-body">
+                    @if (!Model.RecentVisits.Any())
+                    {
+                        <div class="no-visits">
+                            <i class="fas fa-history fa-3x text-muted mb-3"></i>
+                            <p>You haven't visited the pantry yet.</p>
+                            <p class="text-muted">Visit details will go here.</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table id="visitsTable" class="table table-striped table-hover compact">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Day</th>
+                                        <th>Campus</th>
+                                        <th>Items</th>
+                                        <th>Weight</th>
+                                        <th>Notes</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var visit in Model.RecentVisits)
+                                    {
+                                        <tr>
+                                            <td data-order="@visit.VisitDate.ToString("yyyy-MM-dd")">
+                                                @visit.VisitDate.ToString("MMM dd, yyyy")
+                                            </td>
+                                            <td>
+                                                @visit.VisitDate.ToString("dddd")
+                                            </td>
+                                            <td>
+                                                @(visit.Campus?.CampusName ?? "Unknown")
+                                            </td>
+                                            <td data-order="@visit.VisitItems.Sum(vi => vi.QuantityTaken)">
+                                                <span>@visit.VisitItems.Sum(vi => vi.QuantityTaken)</span>
+                                            </td>
+                                            <td data-order="@(visit.TotalWeight ?? 0)">
+                                                @(visit.TotalWeight?.ToString("F1") ?? "0")
+                                            </td>
+                                            <td>
+                                                @if (!string.IsNullOrEmpty(visit.Notes))
+                                                {
+                                                    <span class="text-truncate d-inline-block" style="max-width: 150px;" title="@visit.Notes">
+                                                        @visit.Notes
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted">-</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-sm btn-success" asp-controller="Cart" asp-action="VisitConfirmation" asp-route-visitId="@visit.VisitId" target="_blank" rel="noopener noreferrer">
+                                                    View
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Initialize DataTable
+        new DataTable('#visitsTable', {
+            order: [[0, 'desc']], // Sort by date descending (most recent first)
+            pageLength: 10,
+            responsive: true,
+            columnDefs: [
+                {
+                    targets: [1], // Day column
+                    visible: false,
+                    searchable: false
+                },
+                {
+                    targets: [5], // Notes column
+                    visible: false,
+                    searchable: true,
+                    orderable: false
+                },
+                {
+                    targets: [6], // Actions column
+                    searchable: false,
+                    orderable: false
+                }
+            ],
+            language: {
+                emptyTable: "No visits found",
+                info: "Showing _START_ to _END_ of _TOTAL_ visits",
+                infoEmpty: "Showing 0 to 0 of 0 visits",
+                lengthMenu: "Show _MENU_ visits per page",
+                search: "Search visits:",
+            }
+        });
+
+    </script>
+}
+
+<style>
+
+    .card-header {
+        background-color: #004e8c; /*color picked from scc website*/
+        color: white;
+    }
+
+</style>

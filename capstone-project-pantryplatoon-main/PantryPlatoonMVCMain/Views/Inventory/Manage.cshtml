@@ -1,0 +1,506 @@
+﻿@model List<PantryPlatoonMVCMain.ViewModels.InventoryManagementViewModel>
+@{
+    ViewData["Title"] = "Manage Inventory";
+    var categories = ViewData["Categories"] as List<string> ?? new List<string>(); // Use an empty list if no categories found
+    var currentCategory = ViewData["CurrentCategory"] as string;
+    var currentStockFilter = ViewData["CurrentStockFilter"] as string;
+    var currentSearch = ViewData["CurrentSearch"] as string;
+    var currentSortBy = ViewData["CurrentSortBy"] as string;
+    var currentSortOrder = ViewData["CurrentSortOrder"] as string;
+}
+
+<div class="d-flex justify-content-between align-items-center mt-4 mb-4">
+    <div class="d-flex align-items-center gap-3">
+        <h2>Manage Inventory</h2>
+        <a asp-action="Index" class="btn btn-outline-primary btn-sm">
+            <i class="fas fa-list me-1"></i>View
+        </a>
+    </div>
+
+    <!-- Campus Selector -->
+    <div class="campus-selector">
+        <div class="campus-info-container" onclick="toggleCampusDropdown()" style="cursor: pointer;">
+            <div class="campus-info">
+                <small class="text-muted">
+                    <i class="fas fa-map-marker-alt"></i> @ViewData["CampusName"]
+                    <i class="fas fa-chevron-down ms-1" id="campusChevron"></i>
+                </small>
+            </div>
+        </div>
+
+        <!-- Campus Dropdown (initially hidden) -->
+        <div id="campusDropdown" class="campus-dropdown" style="display: none;">
+            <div class="dropdown-content">
+                <div class="dropdown-header">
+                    <strong>Select Campus</strong>
+                </div>
+                @if (ViewData["AllCampuses"] is List<PantryPlatoonMVCMain.Models.Campus> campuses)
+                {
+                    @foreach (var campus in campuses)
+                    {
+                        <form method="post" asp-action="ChangeCampus" class="d-inline">
+                            <input type="hidden" name="campusId" value="@campus.CampusId" />
+                            @{
+                                string currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "Index";
+                                string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Inventory";
+
+                                string returnUrl = Url.Action(currentAction, currentController, new
+                                {
+                                    category = currentCategory,
+                                    stockFilter = currentStockFilter,
+                                    search = currentSearch,
+                                    sortBy = currentSortBy,
+                                    sortOrder = currentSortOrder
+                                }) ?? "/Inventory/Manage";
+                            }
+                            <input type="hidden" name="returnUrl" value="@returnUrl" />                            <button type="submit" class="dropdown-item @((int)ViewData["SelectedCampusId"]! == campus.CampusId ? "active" : "")">
+                                <i class="fas fa-map-marker-alt me-2"></i>
+                                @campus.CampusName
+                                @if ((int)ViewData["SelectedCampusId"]! == campus.CampusId)
+                                {
+                                    <i class="fas fa-check ms-auto text-success"></i>
+                                }
+                            </button>
+                        </form>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<!-- Quick Actions -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h6 class="card-title">
+                    <i class="fas"></i> Quick Actions
+                </h6>
+                <a asp-action="AddNewItem" class="btn btn-primary btn-sm me-2">
+                    <i class="fas fa-plus"></i> Add New Item to Catalog
+                </a>
+                <a asp-action="Manage" class="btn btn-outline-secondary btn-sm">
+                    <i class="fas fa-refresh"></i> Reset Filters
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h6 class="card-title">
+                    <i class="fas"></i> Quick Stats
+                </h6>
+                <div class="row text-center">
+                    <div class="col-4">
+                        <div class="stat-item">
+                            <strong>@Model.Count(x => x.CurrentQuantity > 0)</strong>
+                            <br><small class="text-muted">In Stock</small>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="stat-item">
+                            <strong>@Model.Count(x => x.CurrentQuantity == 0)</strong>
+                            <br><small class="text-muted">Out of Stock</small>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="stat-item">
+                            <strong>@Model.Count(x => x.CurrentQuantity > 0 && x.CurrentQuantity <= 5)</strong>
+                            <br><small class="text-muted">Low Stock</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Filter and Search Area -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h6 class="mb-0">
+            <i class="fas fa-filter"></i> Filter & Search Items
+        </h6>
+    </div>
+    <div class="card-body">
+        <form asp-action="Manage" method="get" class="row g-3">
+            <!-- Sort parameters -->
+            <input type="hidden" name="sortBy" value="@currentSortBy" />
+            <input type="hidden" name="sortOrder" value="@currentSortOrder" />
+
+            <div class="col-md-4">
+                <label for="search" class="form-label">Search:</label>
+                <input type="text" name="search" class="form-control" placeholder="Search by item name..." value="@currentSearch">
+            </div>
+
+            <div class="col-md-3">
+                <label for="category" class="form-label">Category:</label>
+                <select name="category" class="form-select">
+                    <option value="">All Categories</option>
+                    @foreach (var category in categories)
+                    {
+                        <option value="@category" selected="@(category == currentCategory)">@category</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label for="stockFilter" class="form-label">Stock Status:</label>
+                <select name="stockFilter" class="form-select">
+                    <option value="">All Items</option>
+                    <option value="in-stock" selected="@(currentStockFilter == "in-stock")">In Stock</option>
+                    <option value="out-of-stock" selected="@(currentStockFilter == "out-of-stock")">Out of Stock</option>
+                    <option value="low-stock" selected="@(currentStockFilter == "low-stock")">Low Stock (≤5)</option>
+                </select>
+            </div>
+
+            <div class="col-md-2 d-flex align-items-end">
+                <div class="d-grid w-100">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Apply Filters
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Main Inventory Table -->
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center gap-3">
+            Items (@Model.Count total)
+            <a asp-controller="Admin" asp-action="Index" class="btn btn-outline-primary btn-sm">
+                <i></i>Edit Items
+            </a>
+        </div>
+        @if (!string.IsNullOrEmpty(currentCategory) || !string.IsNullOrEmpty(currentStockFilter) || !string.IsNullOrEmpty(currentSearch))
+        {
+            <div class="filter-indicators">
+                @if (!string.IsNullOrEmpty(currentCategory))
+                {
+                    <span class="badge bg-info me-1">Category: @currentCategory</span>
+                }
+                @if (!string.IsNullOrEmpty(currentStockFilter))
+                {
+                    <span class="badge bg-info me-1">Stock: @currentStockFilter</span>
+                }
+                @if (!string.IsNullOrEmpty(currentSearch))
+                {
+                    <span class="badge bg-success me-1">Search: "@currentSearch"</span>
+                }
+            </div>
+        }
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table id="itemTable" class="table table-hover mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>
+                            <a asp-action="Manage" asp-route-category="@currentCategory" asp-route-stockFilter="@currentStockFilter" asp-route-search="@currentSearch" asp-route-sortBy="name" asp-route-sortOrder="@(currentSortBy == "name" && currentSortOrder != "desc" ? "desc" : "")"
+                               class="text-white text-decoration-none">
+                                Item Name
+                                @if (currentSortBy == "name")
+                                {
+                                    <i class="fas fa-sort-@(currentSortOrder == "desc" ? "down" : "up")"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-sort text-muted"></i>
+                                }
+                            </a>
+                        </th>
+                        <th>
+                            <a asp-action="Manage" asp-route-category="@currentCategory" asp-route-stockFilter="@currentStockFilter" asp-route-search="@currentSearch" asp-route-sortBy="category" asp-route-sortOrder="@(currentSortBy == "category" && currentSortOrder != "desc" ? "desc" : "")"
+                               class="text-white text-decoration-none">
+                                Category
+                                @if (currentSortBy == "category")
+                                {
+                                    <i class="fas fa-sort-@(currentSortOrder == "desc" ? "down" : "up")"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-sort text-muted"></i>
+                                }
+                            </a>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-category="@currentCategory" asp-route-stockFilter="@currentStockFilter" asp-route-search="@currentSearch" asp-route-sortBy="quantity" asp-route-sortOrder="@(currentSortBy == "quantity" && currentSortOrder != "desc" ? "desc" : "")"
+                               class="text-white text-decoration-none">
+                                Current Stock
+                                @if (currentSortBy == "quantity")
+                                {
+                                    <i class="fas fa-sort-@(currentSortOrder == "desc" ? "down" : "up")"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-sort text-muted"></i>
+                                }
+                            </a>
+                        </th>
+                        <th>Status</th>
+                        <th>
+                            <a asp-action="Manage" asp-route-category="@currentCategory" asp-route-stockFilter="@currentStockFilter" asp-route-search="@currentSearch" asp-route-sortBy="updated" asp-route-sortOrder="@(currentSortBy == "updated" && currentSortOrder != "desc" ? "desc" : "")"
+                               class="text-white text-decoration-none">
+                                Last Updated
+                                @if (currentSortBy == "updated")
+                                {
+                                    <i class="fas fa-sort-@(currentSortOrder == "desc" ? "down" : "up")"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-sort text-muted"></i>
+                                }
+                            </a>
+                        </th>
+                        <th width="200">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.ImagePath))
+                                {
+                                    <img src="@item.ImageUrl" height="50" alt="@item.ItemName" class="item-image" />
+                                }
+                                <strong>@item.ItemName</strong>
+                            </td>
+                            <td>
+                                <span class="badge bg-secondary">@item.CategoryName</span>
+                            </td>
+                            <td>
+                                <span class="fw-bold">@item.CurrentQuantity</span>
+                            </td>
+                            <td>
+                                @if (item.CurrentQuantity == 0)
+                                {
+                                    <span class="badge bg-danger">Out of Stock</span>
+                                }
+                                else if (item.CurrentQuantity <= 5)
+                                {
+                                    <span class="badge bg-warning">Low Stock</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">In Stock</span>
+                                }
+                            </td>
+                            <td>
+                                @if (item.LastUpdated.HasValue)
+                                {
+                                    <small class="text-muted">@item.LastUpdated.Value.ToString("MM/dd/yyyy")</small>
+                                }
+                                else
+                                {
+                                    <small class="text-muted">Never</small>
+                                }
+                            </td>
+                            <td>
+                                <div class="btn-group-sm" role="group">
+                                    <!-- Update Quantity Form -->
+                                    <form asp-action="UpdateQuantity" method="post" class="d-inline me-1">
+                                        <input type="hidden" name="itemId" value="@item.ItemId">
+                                        <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString">
+                                        <div class="input-group input-group-sm" style="width: 120px; display: inline-flex;">
+                                            <input type="number" name="quantity" value="@item.CurrentQuantity"
+                                                   min="0" max="999" class="form-control form-control-sm">
+                                            <button type="submit" class="btn btn-primary btn-sm" title="Update">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                    <!-- Quick Adjust Area -->
+                                    <form asp-action="QuickAdjust" method="post" class="d-inline me-1">
+                                        <input type="hidden" name="itemId" value="@item.ItemId">
+                                        <input type="hidden" name="adjustment" value="5">
+                                        <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString">
+                                        <button type="submit" class="btn btn-outline-success btn-sm" title="Add 5">
+                                            +5
+                                        </button>
+                                    </form>
+
+                                    <form asp-action="QuickAdjust" method="post" class="d-inline">
+                                        <input type="hidden" name="itemId" value="@item.ItemId">
+                                        <input type="hidden" name="adjustment" value="-@item.CurrentQuantity">
+                                        <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm" title="Clear Stock"
+                                                onclick="return confirm('Set @item.ItemName to 0 quantity?')">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="text-center py-5">
+        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+        <h4>No items found</h4>
+        <p class="text-muted">Try adjusting your filters or search terms.</p>
+        <a asp-action="Manage" class="btn btn-primary">
+            <i class="fas fa-refresh"></i> Clear All Filters
+        </a>
+    </div>
+}
+
+@section Scripts {
+
+    <script>
+        function toggleCampusDropdown() {
+                const dropdown = document.getElementById('campusDropdown');
+                const chevron = document.getElementById('campusChevron');
+
+                if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                    dropdown.style.display = 'block';
+                    chevron.className = 'fas fa-chevron-up ms-1';
+                } else {
+                    dropdown.style.display = 'none';
+                    chevron.className = 'fas fa-chevron-down ms-1';
+                }
+            }
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                const campusContainer = document.querySelector('.campus-selector');
+                const dropdown = document.getElementById('campusDropdown');
+                const chevron = document.getElementById('campusChevron');
+
+                if (!campusContainer.contains(event.target)) {
+                    dropdown.style.display = 'none';
+                    chevron.className = 'fas fa-chevron-down ms-1';
+                }
+            });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+            $('#itemTable').DataTable({
+                searching: false,
+                pageLength: 25,
+                columnDefs: [ //Hide columns from items table (description and points)
+                    
+                ]
+            });
+        });
+    </script>
+
+}
+
+<style>
+
+    .bg-info {
+        background-color: var(--brand-color) !important;
+    }
+
+    .dt-info {
+        margin-left: 12px;
+    }
+
+    .dt-input {
+        margin-left: 12px;
+        margin-right: 8px;
+    }
+
+    .dropdown-header {
+        padding: 12px 12px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #ddd;
+        font-size: 0.8rem;
+        color: #6c757d;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .dropdown-item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 12px 16px;
+        border: none;
+        background: none;
+        text-align: left;
+        color: #333;
+        text-decoration: none;
+        transition: background-color 0.2s ease;
+        font-size: 0.9rem;
+    }
+
+    .campus-info {
+        background-color: #f8f9fa;
+        padding: 8px 12px;
+        border-radius: 6px;
+        border-left: 4px solid #369044;
+    }
+
+    .btn-primary {
+        background-color: #369044;
+        border-color: #369044;
+    }
+
+        .btn-primary:hover {
+            background-color: #33873F;
+            border-color: #33873F;
+        }
+
+    .stat-item {
+        padding: 8px;
+    }
+
+        .stat-item strong {
+            font-size: 1.5rem;
+            color: #2F3867;
+        }
+
+    .table th {
+        border-top: none;
+        font-weight: 600;
+    }
+
+        .table th a:hover {
+            opacity: 0.8;
+        }
+
+    .filter-indicators .badge {
+        font-size: 0.75rem;
+    }
+
+    .btn-group-sm {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .badge {
+        font-size: 0.75rem;
+    }
+</style>

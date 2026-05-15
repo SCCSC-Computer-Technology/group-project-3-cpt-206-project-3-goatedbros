@@ -1,0 +1,133 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> signInManager
+@inject UserManager<ApplicationUser> userManager
+
+@{
+    var isAdmin = User.IsInRole("Admin");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Pantry Platoon</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/PantryPlatoonMVCMain.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.css" />
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="/">
+                        <h1>Chaser's Food Pantry</h1>
+                    </a>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Inventory" asp-action="Index">Inventory</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Contact" asp-action="Index">Contact</a>
+                        </li>
+
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Volunteer" asp-action="Index">Volunteer Shifts</a>
+                            </li>
+                        }
+
+                        @if (signInManager.IsSignedIn(User) && isAdmin)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="testDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Admin
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="testDropdown">
+                                    <li class="dropdown-item-li"><a class="dropdown-item" asp-controller="Visit" asp-action="Index">Visits</a></li>
+                                    <li class="dropdown-item-li"><a class="dropdown-item" asp-controller="Campus" asp-action="Index">Campus</a></li>
+                                    <li class="dropdown-item-li"><a class="dropdown-item" asp-controller="Donors" asp-action="Index">Donors</a></li>
+                                    <li class="dropdown-item-li"><a class="dropdown-item" asp-controller="User" asp-action="Index">Manage Users</a></li>
+
+                                    <li class="dropdown-item-li"><a class="dropdown-item" asp-controller="Volunteer" asp-action="ManageRequests">Manage Volunteer Requests</a></li>
+
+                                    <li class="dropdown-item-li"><a class="dropdown-item" asp-controller="StaticPages" asp-action="Index">Manage Static Pages</a></li>
+                                    <li class="dropdown-item-li"><a class="dropdown-item" asp-controller="Inventory" asp-action="Manage">Manage Inventory</a></li>
+                                    <li>
+                                        <a class="dropdown-item" href="/Documentation">
+                                            Documentation
+                                        </a>
+                                    </li>
+                                    <li class="dropdown-item-li">
+                                        <form asp-controller="Admin" asp-action="Index" method="post">
+                                            <button type="submit" class="dropdown-item">Admin Control Panel</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+                <div class="user-actions">
+                    <a href="/Cart" class="cart-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                        @await Component.InvokeAsync("CartCount")
+                    </a>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <main class="flex-grow-1">
+            <div class="container py-3">
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+
+    <footer class="site-footer mt-auto py-3 text-white">
+        <div class="container text-center">
+            <div class="mb-2">
+                <a asp-controller="Home" asp-action="Index" class="footer-link">Home</a>
+                <a asp-controller="Contact" asp-action="Index" class="footer-link">Contact</a>
+                <a href="https://www.sccsc.edu" target="_blank" rel="noopener" class="footer-link">SCC Website</a>
+            </div>
+            <div>
+                &copy; @DateTime.Now.Year Pantry Platoon. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <style>
+        .dropdown-menu .dropdown-item-li {
+        margin-left: 0px !important;
+        }
+
+        .footer-link {
+        color: white;
+        text-decoration: none;
+        margin: 0 10px;
+        }
+
+        .footer-link:hover {
+        text-decoration: underline;
+        }
+    </style>
+</body>
+</html>

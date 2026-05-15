@@ -1,0 +1,65 @@
+﻿@model PantryPlatoonMVCMain.ViewModels.VisitDisplayViewModel
+
+@{
+    ViewData["Title"] = "Visit Details";
+}
+
+<h1>Visit Details</h1>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">User</dt>
+        <dd class="col-sm-9">@($"{Model.FirstName} {Model.LastName}")</dd>
+
+        <dt class="col-sm-3">Campus</dt>
+        <dd class="col-sm-9">@Model.CampusName</dd>
+
+        <dt class="col-sm-3">Visit Date</dt>
+        <dd class="col-sm-9">@Model.VisitDate.ToString("yyyy-MM-dd")</dd>
+
+        @if (Model.IsScheduledVisit)
+        {
+            <dt class="col-sm-3">Scheduled Pickup Time</dt>
+            <dd class="col-sm-9">@Model.ScheduledPickupTime?.ToString("f")</dd>
+        }
+
+        <dt class="col-sm-3">Total Weight (lbs)</dt>
+        <dd class="col-sm-9">@Model.TotalWeight?.ToString("F2") ?? "N/A"</dd>
+
+        <dt class="col-sm-3">Notes</dt>
+        <dd class="col-sm-9">@Model.Notes ?? "None"</dd>
+    </dl>
+</div>
+
+@if (Model.Items != null && Model.Items.Any())
+{
+    <h3>Items Taken</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Quantity Taken</th>
+                <th>Weight (lbs)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.ItemName</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Weight.ToString("F2") ?? "N/A"</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p><em>No items recorded for this visit.</em></p>
+}
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.VisitId" class="btn btn-primary">Edit</a> |
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

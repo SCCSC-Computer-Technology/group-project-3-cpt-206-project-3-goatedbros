@@ -1,0 +1,75 @@
+﻿@model PantryPlatoonMVCMain.Models.StaticPage
+
+@{
+    ViewData["Title"] = "Edit Static Page";
+}
+
+<h2 class="mt-4">Edit @Model.PageName Page</h2>
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="PageId" />
+
+            <div class="form-group mb-3" hidden="true">
+                <label asp-for="PageName" class="form-label">Page Name</label>
+                <input asp-for="PageName" class="form-control" readonly />
+                <span asp-validation-for="PageName" class="text-danger"></span>
+            </div>
+
+            <!-- The Editor (TinyMCE) -->
+            <div class="form-group mb-3">
+                <label asp-for="HtmlContent" class="form-label">Content</label>
+                <textarea asp-for="HtmlContent" id="content-editor" rows="20" class="form-control"></textarea>
+                <span asp-validation-for="HtmlContent" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save Changes" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back to All Static Pages</a>
+            </div>
+        </form>
+    </div>
+    <!-- Tips Area -->
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Tips</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li><b>Welcome to the static page editor!</b></li>
+                    <li>• Use the toolbar to format text</li>
+                    <li>• Add links and images</li>
+                    <li>• Changes appear immediately on the website</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- TinyMCE Rich Text Editor -->
+<script src="https://cdn.tiny.cloud/1/22lu65elebrdn8d422qto6zjyy6ywqr465ctebq18ia14dbt/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+      selector: '#content-editor',
+      height: 400,
+      plugins: [
+        'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+        'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+        'insertdatetime', 'media', 'table', 'help', 'wordcount'
+      ],
+      toolbar: 'undo redo | blocks | ' +
+        'bold italic forecolor | alignleft aligncenter ' +
+        'alignright alignjustify | bullist numlist outdent indent | ' +
+        'removeformat | help',
+      content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; }'
+    });
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

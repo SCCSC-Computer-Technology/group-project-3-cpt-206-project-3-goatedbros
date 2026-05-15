@@ -1,0 +1,29 @@
+﻿@model PantryPlatoonMVCMain.ViewModels.UserDisplayViewModelHolder
+<br />
+<div class="card h-100">
+    <div class="card-header">Users</div>
+    <div class="card-body">
+        @await Html.PartialAsync("_UserTable", Model)
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready( function () {
+            $('#exampleTable').DataTable();
+        } );
+    </script>
+}
+
+<style>
+
+    .card-header {
+        background-color: #004e8c; /*color picked from scc website*/
+        color: white;
+    }
+
+    .dt-input {
+        margin-right: 8px;
+    }
+
+</style>

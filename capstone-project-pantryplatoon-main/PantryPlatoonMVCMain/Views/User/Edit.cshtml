@@ -1,0 +1,54 @@
+﻿@model PantryPlatoonMVCMain.ViewModels.UserViewModel
+
+<table class="table table-hover table-sm">
+    <thead>
+        <tr>
+            <th>
+                Username
+            </th>
+            <th>
+                Roles
+            </th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        @foreach (ApplicationUser user in Model.Users)
+        {
+            <tr>
+                <td> @user.UserName </td>
+                <td>
+                    @foreach (string roleName in user.RoleNames)
+                    {
+                        <div>@roleName</div>
+                    }
+                </td>
+                <td>
+                    @foreach (var role in Model.Roles)
+                    {
+                        if (!user.RoleNames.Contains(role.Name))
+                        {
+                            <form method="post" asp-controller="User" asp-action="AddtoRole" asp-route-userId="@user.Id" asp-route-roleName="@role.Name">
+                                <button type="submit" class="btn btn-primary">Add to @role.Name</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <form method="post" asp-controller="User" asp-action="RemoveFromRole" asp-route-userId="@user.Id" asp-route-roleName="@role.Name">
+                                <button type="submit" class="btn btn-danger">Remove from @role.Name</button>
+                            </form>
+                        }
+                    }
+                </td>
+                <td>
+                    <form method="post" asp-controller="User" asp-action="Delete" asp-route-id="@user.Id">
+                        <button type="submit" class="btn btn-danger">Delete User</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+<div class="mt-3">
+    <a asp-controller="Admin" asp-action="Index" class="btn btn-success">Back to List</a>
+</div>

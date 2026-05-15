@@ -1,0 +1,28 @@
+﻿@model PantryPlatoonMVCMain.ViewModels.UserDisplayViewModelHolder
+
+<table id="exampleTable" class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td>@user.FirstName @user.LastName</td>
+                <td>@user.Email</td>
+                <td>@string.Join(", ", user.RoleNames)</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@user.IdentityId" class="btn btn-success btn-sm me-2">
+                        Details
+                    </a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

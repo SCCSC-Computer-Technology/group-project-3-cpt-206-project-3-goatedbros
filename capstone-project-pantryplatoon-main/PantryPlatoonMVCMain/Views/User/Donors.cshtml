@@ -1,0 +1,34 @@
+﻿@model List<PantryPlatoonMVCMain.ViewModels.UserDisplayViewModel>
+
+@{
+    ViewData["Title"] = "Donors";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (Model == null || !Model.Any())
+{
+    <p>No donors found.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var donor in Model)
+            {
+                <tr>
+                    <td>@donor.Email</td>
+                    <td>@donor.FirstName</td>
+                    <td>@donor.LastName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

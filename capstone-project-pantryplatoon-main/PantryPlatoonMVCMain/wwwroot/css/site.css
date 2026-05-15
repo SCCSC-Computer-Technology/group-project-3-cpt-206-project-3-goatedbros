@@ -1,0 +1,181 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+/*
+body {
+  margin-bottom: 60px;
+}
+*/
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+/* Header Styles */
+:root {
+    --primary-color: #2D3867;
+    --secondary-color: #299044;
+    --text-color: #333;
+    --light-color: #fff;
+    --brand-color: #258F44;
+    --brand-color-lighter: #2AA34C;
+    --brand-color-darker: #1D7034;
+}
+
+.site-header {
+    background-color: var(--primary-color);
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+    .site-header .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .site-header .logo a {
+        text-decoration: none;
+    }
+
+    .site-header .logo h1 {
+        color: var(--light-color);
+        margin: 0;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .site-header .main-nav > ul {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .site-header .main-nav li {
+        margin-left: 25px;
+    }
+
+    .site-header .main-nav a:not(.dropdown-item) {
+        color: var(--light-color) !important;
+        text-decoration: none;
+        font-weight: 500;
+        text-transform: uppercase;
+        font-size: 14px;
+        transition: color 0.3s;
+    }
+
+        .site-header .main-nav a:not(.dropdown-item):hover,
+        .site-header .main-nav a:not(.dropdown-item):focus {
+            color: var(--secondary-color) !important;
+            text-decoration: none;
+        }
+
+    .site-header .user-actions {
+        display: flex;
+        align-items: center;
+    }
+
+    .site-header .cart-icon {
+        position: relative;
+        color: var(--light-color);
+        font-size: 20px;
+        margin-right: 20px;
+        text-decoration: none;
+    }
+
+    .site-header .cart-count {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background-color: var(--secondary-color);
+        color: var(--text-color);
+        font-size: 12px;
+        font-weight: bold;
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .site-header .login-btn {
+        color: var(--light-color);
+        text-decoration: none;
+        font-weight: bold;
+        padding: 8px 16px;
+        border: 2px solid var(--light-color);
+        border-radius: 4px;
+        transition: all 0.3s;
+    }
+
+        .site-header .login-btn:hover,
+        .site-header .login-btn:focus {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+.dropdown-menu {
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-item {
+    color: var(--text-color);
+    font-size: 14px;
+    padding: 8px 16px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+    .dropdown-item:hover,
+    .dropdown-item:focus {
+        background-color: #f0f0f0;
+        color: var(--text-color);
+    }
+
+.text-dark {
+    --bs-text-opacity: 1;
+    color: rgb(255 255 255) !important;
+}
+
+/* Footer Styles */
+.site-footer {
+    background-color: #2D3867;
+    font-size: 0.9rem;
+}
+
+.footer-link {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.2s ease-in-out;
+}
+
+    .footer-link:hover {
+        color: #ccc;
+        text-decoration: underline;
+    }

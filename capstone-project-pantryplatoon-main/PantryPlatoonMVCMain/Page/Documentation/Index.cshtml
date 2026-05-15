@@ -1,0 +1,117 @@
+﻿@page
+@model PantryPlatoonMVCMain.Pages.Documentation.IndexModel
+
+@{
+    ViewData["Title"] = "Documentation";
+}
+
+<div class="container mt-4">
+    <h1>Documentation</h1>
+    <p class="text-muted">Upload, store, and view pantry documentation.</p>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <strong>Upload New Document</strong>
+        </div>
+
+        <div class="card-body">
+            <form method="post" asp-page-handler="Upload" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label">Document Title</label>
+                    <input asp-for="Title" class="form-control" placeholder="Example: Pantry Rules Form" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea asp-for="Description" class="form-control" rows="3" placeholder="Short description of the document"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Choose File</label>
+                    <input asp-for="UploadedFile" type="file" class="form-control" required />
+                    <small class="text-muted">Allowed files: PDF, Word, TXT, PNG, JPG, JPEG</small>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Upload Document
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <strong>Documentation Report</strong>
+        </div>
+
+        <div class="card-body">
+            <h5>Total Documents Uploaded: @Model.Documents.Count</h5>
+
+            @if (Model.Documents == null || !Model.Documents.Any())
+            {
+                <p class="text-muted mt-3">No documents have been uploaded yet.</p>
+            }
+            else
+            {
+                <table class="table table-bordered table-striped align-middle mt-3">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Original File Name</th>
+                            <th>File Type</th>
+                            <th>File Size</th>
+                            <th>Uploaded By</th>
+                            <th>Uploaded At</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var doc in Model.Documents)
+                        {
+                            <tr>
+                                <td>@doc.Title</td>
+                                <td>@doc.Description</td>
+                                <td>@doc.OriginalFileName</td>
+                                <td>@doc.ContentType</td>
+                                <td>@Model.FormatFileSize(doc.FileSizeBytes)</td>
+                                <td>@doc.UploadedBy</td>
+                                <td>@doc.UploadedAt.ToString("MM/dd/yyyy h:mm tt")</td>
+                                <td>
+                                    <a href="@doc.FilePath" target="_blank" class="btn btn-sm btn-outline-primary">
+                                        View
+                                    </a>
+
+                                    <form method="post" asp-page-handler="Delete" asp-route-id="@doc.DocumentationUploadId" class="d-inline">
+                                        <button type="submit"
+                                                class="btn btn-sm btn-outline-danger"
+                                                onclick="return confirm('Are you sure you want to delete this document?');">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>

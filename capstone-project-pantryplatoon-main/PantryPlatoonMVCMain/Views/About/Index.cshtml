@@ -1,0 +1,16 @@
+﻿@model StaticPage
+
+@{
+    ViewData["Title"] = "About";
+}
+
+@if (Model?.HtmlContent != null)
+{
+    @Html.Raw(Model.HtmlContent)
+}
+else
+{
+    <!-- Fallback to an error message if no static pages exist... -->
+    <h1>Welcome</h1>
+    <p>Error loading content... Please contact the site administrator at sccpantry@sccsc.edu</p>
+}

@@ -1,0 +1,263 @@
+﻿@model PantryPlatoonMVCMain.Models.ShoppingCart
+@{
+    ViewData["Title"] = "My Bag";
+}
+
+<div class="cart-container">
+    <h1>My Bag</h1>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (!Model.Items.Any())
+    {
+        <div class="empty-cart">
+            <div class="text-center py-5">
+                <i class="fas fa-shopping-bag fa-4x text-muted mb-3"></i>
+                <h4>Your bag is empty</h4>
+                <p class="text-muted">Browse available items to add them to your bag.</p>
+                <a asp-controller="Inventory" asp-action="Index" class="btn btn-primary btn-lg">
+                    <i class="fas fa-search"></i> Browse Items
+                </a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- Cart Items -->
+                @foreach (var item in Model.Items)
+                {
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <div class="item-in-cart">
+                                        @if (!string.IsNullOrEmpty(item.ImagePath))
+                                        {
+                                            <img src="@item.ImageUrl" height="50" alt="@item.ItemName" class="item-image" />
+                                        }
+                                        else
+                                        {
+                                            <div class="item-placeholder-icon">
+                                                <i class="fas fa-box"></i>
+                                            </div>
+                                        }
+                                        <div class="item-details">
+                                            <h5 class="card-title mb-1">@item.ItemName</h5>
+                                            <small class="text-muted">@item.CategoryName</small>
+                                            @if (PantryPlatoonMVCMain.Util.GlobalFlags.ShowPoints)
+                                            {
+                                                @if (item.Points > 0)
+                                                {
+                                                    <br>
+
+                                                    <small class="text-info"><i class="fas fa-star"></i> @item.TotalPoints points</small>
+                                                }
+                                            }
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <form asp-action="UpdateQuantity" method="post" class="quantity-form">
+                                        <input type="hidden" name="itemId" value="@item.ItemId" />
+                                        <label class="form-label small">Quantity:</label>
+                                        <div class="input-group input-group-sm">
+                                            <input type="number" name="quantity" value="@item.Quantity"
+                                                   min="1" max="20" class="form-control text-center"
+                                                   onchange="this.form.submit()" />
+                                            <button type="submit" class="btn btn-outline-primary btn-sm">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-3 text-end">
+                                    @if (item.Weight > 0)
+                                    {
+                                        <div class="mb-2">
+                                            <small class="text-muted">
+                                                <i class="fas fa-weight-hanging"></i>
+                                                @item.TotalWeight lbs total
+                                            </small>
+                                        </div>
+                                    }
+                                    <form asp-action="RemoveItem" method="post" style="display: inline;">
+                                        <input type="hidden" name="itemId" value="@item.ItemId" />
+                                        <button type="submit" class="btn btn-outline-danger btn-sm"
+                                                onclick="return confirm('Remove @item.ItemName from your bag?')">
+                                            <i class="fas fa-trash"></i> Remove
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="col-lg-4">
+                <!-- Cart Summary -->
+                <div class="card sticky-top">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-shopping-bag"></i> Bag Summary
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="summary-row">
+                            <span>Total Items:</span>
+                            <span class="fw-bold">@Model.TotalItems</span>
+                        </div>
+
+                        @if (Model.TotalWeight > 0)
+                        {
+                            <div class="summary-row">
+                                <span>Total Weight:</span>
+                                <span class="fw-bold">@Model.TotalWeight lbs</span>
+                            </div>
+                        }
+                        @if (PantryPlatoonMVCMain.Util.GlobalFlags.ShowPoints)
+                        {
+                            @if (Model.Items.Any(x => x.Points > 0))
+                            {
+                                <div class="summary-row">
+                                    <span>Total Points:</span>
+                                    <span class="fw-bold text-info">
+                                        <i class="fas fa-star"></i> @Model.Items.Sum(x => x.TotalPoints)
+                                    </span>
+                                </div>
+                            }
+                        }
+
+                        <hr>
+
+                        <div class="d-grid gap-2">
+                            <form asp-action="Checkout" method="post">
+                                <button type="submit" class="btn btn-success btn-lg w-100"
+                                        onclick="return confirm('Complete your pantry visit and take these items?')">
+                                    <i class="fas fa-check-circle"></i> Complete Visit
+                                </button>
+                            </form>
+
+                            <a asp-controller="Inventory" asp-action="Index" class="btn btn-outline-primary">
+                                <i class="fas fa-plus"></i> Continue Browsing
+                            </a>
+
+                            <a asp-action="ClearCart" class="btn btn-outline-secondary btn-sm"
+                               onclick="return confirm('Clear all items from your bag?')">
+                                <i class="fas fa-trash"></i> Empty Bag
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .cart-container {
+        padding: 20px 0;
+    }
+
+    .empty-cart {
+        background-color: #f8f9fa;
+        border-radius: 12px;
+        padding: 40px;
+        margin: 40px 0;
+        border: 2px dashed #dee2e6;
+    }
+
+    .item-in-cart {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .item-placeholder-icon {
+        width: 50px;
+        height: 50px;
+        background-color: #e9ecef;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6c757d;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+    }
+
+    .item-details {
+        flex-grow: 1;
+    }
+
+    .quantity-form .form-label {
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #2F3867;
+    }
+
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        padding: 5px 0;
+    }
+
+        .summary-row:last-of-type {
+            margin-bottom: 0;
+        }
+
+    .btn-success {
+        background-color: #369044;
+        border-color: #369044;
+        font-weight: 600;
+    }
+
+        .btn-success:hover {
+            background-color: #33873F;
+            border-color: #33873F;
+        }
+
+    .card {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .card-header {
+        background-color: #f8f9fa;
+        border-bottom: 2px solid #369044;
+    }
+
+    .sticky-top {
+        top: 20px;
+    }
+
+    {
+        position: relative !important;
+        top: auto !important;
+    }
+
+    .item-in-cart {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    }
+</style>

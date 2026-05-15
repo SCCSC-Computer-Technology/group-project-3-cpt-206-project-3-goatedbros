@@ -1,0 +1,78 @@
+﻿@model PantryPlatoonMVCMain.ViewModels.DonorIndexViewModel
+
+@{
+    ViewData["Title"] = "Donor Sumbissions";
+}
+
+<h1>Donor Submissions</h1>
+<div class="card h-100">
+    <div class="card-header">Donor Submissions</div>
+    <div class="card-body">
+        <form method="get" asp-action="Index" class="mb-3 d-flex align-items-end gap-2">
+                <div class="col-md-5" style="min-width: 200px;">
+                    <select asp-for="CampusId" class="form-control category-dropdown" asp-items="@(new SelectList(Model.Campuses, "CampusId", "CampusName"))">
+                        <option value="">All Campuses</option>
+                    </select>
+                    <span asp-validation-for="CampusId" class="text-danger"></span>
+                </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Select Location</button>
+            </div>
+        </form>
+
+        <table id="donorTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Submission Date</th>
+                    <th>Donation(s) Received</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var donation in Model.Donations)
+                {
+                    var donor = donation.Donor;
+                    <tr>
+                        <td>@donor?.DonorName</td>
+                        <td>@donor?.Email</td>
+                        <td>@donor?.PhoneNumber</td>
+                        <td>@donation.DateDonated.ToString("g")</td>
+                        <td>
+                            @{
+                                var received = donation.IsReceived; // safely default to false if null
+                            }
+                            <span class="badge bg-@(received ? "success" : "warning")">
+                                @(received ? "Yes" : "No")
+                            </span>
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@donor?.DonorId" class="btn btn-primary btn-sm">View</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+
+    .card-header {
+        background-color: #004e8c; /*color picked from scc website*/
+        color: white;
+    }
+
+</style>
+
+@section Scripts {
+
+    <script>
+        new DataTable('#donorTable',{
+
+        });
+    </script>
+
+}

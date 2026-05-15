@@ -1,0 +1,327 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div>
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10 col-sm-12">
+            <div class="card-bg">
+                <!-- The actual form -->
+                <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <h2>Create a new account.</h2>
+                    <hr />
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+                    <!-- SCC Id -->
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.SCCId" class="form-control" aria-required="true" />
+                        <label asp-for="Input.SCCId">SCC ID</label>
+                        <span asp-validation-for="Input.SCCId" class="text-danger"></span>
+                    </div>
+
+                    <!-- Campus Selection -->
+                    <div class="form-floating mb-3">
+                        <select asp-for="Input.CampusId" class="form-select" aria-required="true">
+                            <option value="">Please select a campus</option>
+                            @foreach (var campus in Model.CampusList)
+                            {
+                                <option value="@campus.Value">@campus.Text</option>
+                            }
+                        </select>
+                        <label asp-for="Input.CampusId">Campus</label>
+                        <span asp-validation-for="Input.CampusId" class="text-danger"></span>
+                    </div>
+
+                    <!-- First Name -->
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.FirstName" class="form-control" aria-required="true" />
+                        <label asp-for="Input.FirstName">First Name</label>
+                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                    </div>
+
+                    <!-- Last Name -->
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.LastName" class="form-control" aria-required="true" />
+                        <label asp-for="Input.LastName">Last Name</label>
+                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                    </div>
+
+                    <!-- Demographic Information -->
+                    <h4 class="mt-4 mb-3">Demographic Information</h4>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Age"
+                               type="text"
+                               inputmode="numeric"
+                               pattern="[0-9]*"
+                               class="form-control"
+                               />
+                        <label asp-for="Input.Age">Age</label>
+                        <span asp-validation-for="Input.Age" class="text-danger"></span>
+                    </div>
+
+                    <h5 class="mt-4 mb-3">Household Size</h5>
+                    <p class="text-muted small mb-3">
+                        Enter the number of adults and children living in your household.
+                    </p>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-floating mb-3">
+                                <input asp-for="Input.AdultsInHousehold"
+                                       type="text"
+                                       inputmode="numeric"
+                                       pattern="[0-9]*"
+                                       class="form-control"
+                                       />
+                                <label asp-for="Input.AdultsInHousehold">Adults in Household</label>
+                                <span asp-validation-for="Input.AdultsInHousehold" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-floating mb-3">
+                                <input asp-for="Input.ChildrenUnder5"
+                                       type="text"
+                                       inputmode="numeric"
+                                       pattern="[0-9]*"
+                                       class="form-control"
+                                    />
+                                <label asp-for="Input.ChildrenUnder5">Children Ages 0-5</label>
+                                <span asp-validation-for="Input.ChildrenUnder5" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-floating mb-3">
+                                <input asp-for="Input.Children5To18"
+                                       type="text"
+                                       inputmode="numeric"
+                                       pattern="[0-9]*"
+                                       class="form-control"
+                                      />
+                                <label asp-for="Input.Children5To18">Children Ages 5-18</label>
+                                <span asp-validation-for="Input.Children5To18" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <select asp-for="Input.StudentStatus" class="form-select">
+                            <option value="">Select student status</option>
+                            <option value="Full time">Full time</option>
+                            <option value="Part time">Part time</option>
+                            <option value="Traditional student">Traditional student</option>
+                            <option value="Nontraditional student">Nontraditional student</option>
+                        </select>
+                        <label asp-for="Input.StudentStatus">Student Status</label>
+                        <span asp-validation-for="Input.StudentStatus" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <select asp-for="Input.EmploymentStatus" class="form-select">
+                            <option value="">Select employment status</option>
+                            <option value="Full-time">Full-time</option>
+                            <option value="Part-time">Part-time</option>
+                            <option value="Not Employed">Not Employed</option>
+                        </select>
+                        <label asp-for="Input.EmploymentStatus">Your Employment Status</label>
+                        <span asp-validation-for="Input.EmploymentStatus" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <textarea asp-for="Input.HouseholdEmploymentStatus"
+                                  class="form-control textarea-large"
+                                  ></textarea>
+                        <label asp-for="Input.HouseholdEmploymentStatus">
+                            Employment status of everyone over 18 in your household
+                        </label>
+                        <span asp-validation-for="Input.HouseholdEmploymentStatus" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <select asp-for="Input.BenefitsStatus" class="form-select">
+                            <option value="">Select option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                        <label asp-for="Input.BenefitsStatus">SNAP, TANF, or WIC Benefits</label>
+                        <span asp-validation-for="Input.BenefitsStatus" class="text-danger"></span>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@sccsc.edu" />
+                        <label asp-for="Input.Email">Email</label>
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                        <label asp-for="Input.Password">Password</label>
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                        <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <!-- Agreement Checkboxes -->
+                    <div class="agreement-checkboxes mb-4">
+                        <!-- Pantry Rules Agreement -->
+                        <div class="form-check mb-3">
+                            <input asp-for="Input.AcceptRules" class="form-check-input" type="checkbox" data-val="false" />
+                            <label asp-for="Input.AcceptRules" class="form-check-label">
+                                I have read and agree to the
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#rulesModal" class="terms-link">pantry rules.</a>
+                            </label>
+                            <span asp-validation-for="Input.AcceptRules" class="text-danger d-block"></span>
+                        </div>
+
+                        <!-- Liability Waiver Agreement -->
+                        <div class="form-check mb-3">
+                            <input asp-for="Input.AcceptLiability" class="form-check-input" type="checkbox" data-val="false" />
+                            <label asp-for="Input.AcceptLiability" class="form-check-label">
+                                I have read and agree to the
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#liabilityModal" class="terms-link">liability waiver.</a>
+                            </label>
+                            <span asp-validation-for="Input.AcceptLiability" class="text-danger d-block"></span>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Rules Modal -->
+<div class="modal fade" id="rulesModal" tabindex="-1" aria-labelledby="rulesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="rulesModalLabel">SCC Pantry Rules</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @if (Model.RulesPage?.HtmlContent != null)
+                {
+                    @Html.Raw(Model.RulesPage.HtmlContent)
+                }
+                else
+                {
+                    <div>Error loading rules form.</div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="acceptRules()">I Agree</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Liability Modal -->
+<div class="modal fade" id="liabilityModal" tabindex="-1" aria-labelledby="liabilityModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="liabilityModalLabel">Liability Waiver</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @if (Model.LiabilityPage?.HtmlContent != null)
+                {
+                    @Html.Raw(Model.LiabilityPage.HtmlContent)
+                }
+                else
+                {
+                    <div>Error loading liability form.</div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="acceptLiability()">I Agree</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card-bg {
+        background: white;
+        border-radius: 16px;
+        padding: 2.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border: none;
+        max-width: 950px;
+        margin: 0 auto;
+    }
+
+    .form-control,
+    .form-select {
+        min-height: 58px;
+        font-size: 1rem;
+    }
+
+    .form-floating > label {
+        color: #5f6b7a;
+        white-space: normal;
+        line-height: 1.2;
+    }
+
+    .textarea-large {
+        min-height: 120px !important;
+        padding-top: 2.2rem !important;
+    }
+
+    h4 {
+        font-weight: 600;
+        color: #1f2937;
+    }
+
+    h5 {
+        font-weight: 600;
+        color: #374151;
+    }
+
+    .btn-primary {
+        background-color: var(--brand-color);
+        border-color: var(--brand-color);
+    }
+
+        .btn-primary:hover {
+            background-color: var(--brand-color-lighter);
+            border-color: var(--brand-color-lighter);
+        }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function acceptRules() {
+            document.getElementById('@Html.IdFor(m => m.Input.AcceptRules)').checked = true;
+            var modal = bootstrap.Modal.getInstance(document.getElementById('rulesModal'));
+            modal.hide();
+
+            $('@Html.IdFor(m => m.Input.AcceptRules)').trigger('change');
+        }
+
+        function acceptLiability() {
+            document.getElementById('@Html.IdFor(m => m.Input.AcceptLiability)').checked = true;
+            var modal = bootstrap.Modal.getInstance(document.getElementById('liabilityModal'));
+            modal.hide();
+
+            $('@Html.IdFor(m => m.Input.AcceptLiability)').trigger('change');
+        }
+    </script>
+}

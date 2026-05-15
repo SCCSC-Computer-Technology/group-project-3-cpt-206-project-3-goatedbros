@@ -1,0 +1,262 @@
+﻿@model PantryPlatoonMVCMain.ViewModels.NewItemViewModel
+@{
+    ViewData["Title"] = "Add New Item to Catalog";
+    var categories = ViewData["Categories"] as List<PantryPlatoonMVCMain.Models.ItemCategory> ?? new List<PantryPlatoonMVCMain.Models.ItemCategory>();
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2><i class="fas fa-plus-circle text-success"></i> Add New Item to Catalog</h2>
+                    <p class="text-muted">Create a new item that can be stocked across all campuses</p>
+                </div>
+                <div class="d-flex flex-column gap-2">
+                    <a asp-action="Manage" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Manage Inventory
+                    </a>
+                    <a asp-controller="Admin" asp-action="Index" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to All Items
+                    </a>
+                </div>
+            </div>
+
+            <!-- Form Card -->
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-box"></i> Item Information</h5>
+                </div>
+                <div class="card-body">
+
+                    <form asp-action="AddNewItem" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <!-- Item Name -->
+                        <div class="mb-3">
+                            <label asp-for="ItemName" class="form-label required">
+                                <i class="fas fa-tag"></i> Item Name
+                            </label>
+                            <input asp-for="ItemName" class="form-control" placeholder="Enter item name (e.g., Canned Corn, Rice Bag 5lb)" required>
+                            <span asp-validation-for="ItemName" class="text-danger"></span>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label">
+                                <i class="fas fa-align-left"></i> Description (Optional)
+                            </label>
+                            <textarea asp-for="Description" class="form-control" rows="3" placeholder="Additional details about the item (brand, size, special notes)"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <!-- Image Upload -->
+                        <div class="mb-3">
+                            <label asp-for="ImageFile" class="form-label">
+                                <i class="fas fa-camera"></i> Item Image (Optional)
+                            </label>
+                            <input asp-for="ImageFile" type="file" class="form-control" accept="image/*" onchange="previewImage(this)">
+                            <span asp-validation-for="ImageFile" class="text-danger"></span>
+                            <div class="form-text">
+                                <small><i class="fas fa-info-circle"></i> Upload a clear photo of the item (JPG, PNG, GIF, etc.)</small>
+                            </div>
+                            <!-- Image Preview -->
+                            <div id="imagePreview" class="mt-3" style="display: none;">
+                                <div class="card" style="max-width: 250px;">
+                                    <img id="previewImg" src="#" alt="Image preview" class="card-img-top" style="height: 200px; object-fit: cover;">
+                                    <div class="card-body text-center py-2">
+                                        <small class="text-muted">Image Preview</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Category -->
+                        <div class="mb-3">
+                            <label asp-for="ItemCategoryId" class="form-label required">
+                                <i class="fas fa-folder"></i> Category
+                            </label>
+                            <select asp-for="ItemCategoryId" class="form-select" required>
+                                <option value="">-- Select a Category --</option>
+                                @foreach (var category in categories)
+                                {
+                                    <option value="@category.ItemCategoryId">@category.ItemCategoryName</option>
+                                }
+                            </select>
+                            <span asp-validation-for="ItemCategoryId" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <!-- Weight -->
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="Weight" class="form-label">
+                                    <i class="fas fa-weight-hanging"></i> Weight (lbs)
+                                </label>
+                                <input asp-for="Weight" type="number" step="0.01" min="0" class="form-control" placeholder="0.00">
+                                <span asp-validation-for="Weight" class="text-danger"></span>
+                            </div>
+
+                            <!-- Points -->
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="Points" class="form-label">
+                                    <i class="fas fa-star"></i> Points Value
+                                </label>
+                                <input asp-for="Points" type="number" min="0" class="form-control" placeholder="0">
+                                <span asp-validation-for="Points" class="text-danger"></span>
+                            </div>
+
+                            <!-- Initial Quantity -->
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="InitialQuantity" class="form-label">
+                                    <i class="fas fa-cubes"></i> Initial Stock
+                                </label>
+                                <input asp-for="InitialQuantity" type="number" min="0" class="form-control" placeholder="0">
+                                <span asp-validation-for="InitialQuantity" class="text-danger"></span>
+                                <div class="form-text">
+                                    <small><i class="fas fa-info-circle"></i> Starting quantity for selected campus</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Information Panel -->
+                        <div class="alert alert-info" role="alert">
+                            <h6><i class="fas fa-info-circle"></i> How this works:</h6>
+                            <ul class="mb-0">
+                                <li><strong>Item Catalog:</strong> This creates a new item type that can be stocked at any campus</li>
+                                <li><strong>Initial Stock:</strong> If you enter a quantity, it will be added to your campus inventory</li>
+                                <li><strong>Other Campuses:</strong> They can stock this item independently with their own quantities</li>
+                                <li><strong>Required Fields:</strong> Only Item Name and Category are required</li>
+                                <li><strong>Categories:</strong> Group similar items together (Canned Goods, Fresh Produce, etc.)</li>
+                                <li><strong>Weight:</strong> Helps with calculations and recording</li>
+                            </ul>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="d-flex justify-content-between pt-3 border-top">
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fas fa-plus"></i> Add Item to Catalog
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .required::after {
+        content: " *";
+        color: #dc3545;
+        font-weight: bold;
+    }
+
+    .card {
+        border: none;
+        border-radius: 10px;
+    }
+
+    .card-header {
+        border-radius: 10px 10px 0 0 !important;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+    .alert-info {
+        background-color: #e7f3ff;
+        border-color: #b3d7ff;
+        color: #0c5460;
+    }
+
+    .bg-light {
+        background-color: #f8f9fa !important;
+    }
+</style>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        // Image preview function
+        function previewImage(input) {
+            const preview = document.getElementById('imagePreview');
+            const previewImg = document.getElementById('previewImg');
+
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+
+                // Check file size (5MB limit)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('File size must be less than 5MB');
+                    input.value = '';
+                    preview.style.display = 'none';
+                    return;
+                }
+
+                // Check file type
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/bmp', 'image/webp'];
+                if (!allowedTypes.includes(file.type.toLowerCase())) {
+                    alert('Please select a valid image file (JPG, PNG, GIF, BMP, WebP)');
+                    input.value = '';
+                    preview.style.display = 'none';
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+
+        // Validation
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var forms = document.getElementsByClassName('needs-validation');
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        console.log('Form is being submitted');
+                        if (form.checkValidity() === false) {
+                            console.log('Form validation failed');
+                            event.preventDefault();
+                            event.stopPropagation();
+                        } else {
+                            console.log('Form validation passed');
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+
+        // Auto-focus on first input
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('input[name="ItemName"]').focus();
+        });
+    </script>
+}

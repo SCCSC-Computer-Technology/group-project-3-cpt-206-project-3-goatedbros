@@ -1,0 +1,20 @@
+﻿@model List<PantryPlatoonMVCMain.Models.Item>
+<br />
+<br />
+@await Html.PartialAsync("_ItemsTable", Model)
+
+@section Scripts{
+    
+
+    <script>
+        new DataTable('#itemTable',{
+            columnDefs: [
+                {
+                    target: 1,
+                    visible: false,
+                    searchable: false
+                }
+            ],
+        });
+    </script>
+}

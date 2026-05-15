@@ -1,0 +1,45 @@
+﻿@model PantryPlatoonMVCMain.Models.Donor
+
+<h2>Donor Details</h2>
+
+<div>
+    <h4>@Model.DonorName</h4>
+    <p>Email: @Model.Email</p>
+    <p>Phone: @Model.PhoneNumber</p>
+</div>
+
+<h4>Donations</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Date Submitted</th>
+            <th>Received?</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var donation in Model.Donations)
+        {
+            <tr>
+                <td>@donation.ItemName</td>
+                <td>@donation.Quantity</td>
+                <td>@donation.DateDonated.ToShortDateString()</td>
+                <td>@(donation.IsReceived ? "Yes" : "No")</td>
+                <td>
+                    @if (!donation.IsReceived)
+                    {
+                        <form asp-action="MarkAsReceived" method="post" asp-route-id="@donation.DonationId">
+                            <button type="submit" class="btn btn-success btn-sm">Mark as Received</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

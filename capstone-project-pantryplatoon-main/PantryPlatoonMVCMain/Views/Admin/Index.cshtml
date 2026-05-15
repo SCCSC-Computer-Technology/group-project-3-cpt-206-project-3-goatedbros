@@ -1,0 +1,150 @@
+﻿@model PantryPlatoonMVCMain.ViewModels.AdminViewModel
+
+<style>
+
+</style>
+
+<h1>Admin Page</h1>
+
+<br />
+@* Several rows of 'cards' that each show a stat based on the model*@
+<div class="row justify-content-between">
+
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-header"> Visits </div>
+            <div class="card-body">
+                <h5 class="card-text">Total Visits: @Model.Visits.Count() </h5>
+                <h5 class="card-text">This Month: @Model.Visits.Count(i => i.VisitDate.Month == DateTime.Now.Month) </h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card h-100 ">
+            <div class="card-header"> Users</div>
+            <div class="card-body">
+                <h5 class="card-title"> Total Users: @Model.Users.Users.Count() </h5>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-header"> Inventory</div>
+            <div class="card-body">
+                <h5 class="card-text">Food items: @Model.Items.Count(i => i.ItemCategoryId <= 9) </h5>
+                <h5 class="card-text">Non-food items: @Model.Items.Count(i => i.ItemCategoryId >= 10) </h5>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<br />
+
+<div class="row justify-content-between">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-header"> User Roles </div>
+            <div class="card-body d-flex justify-content-evenly">
+                <h5> Donors: @Model.DonorCount</h5>
+                <h5> Staff: @Model.Users.Users.Count(i => i.RoleNames.Contains("Staff")) </h5>
+                <h5> Student: @Model.Users.Users.Count(i => i.RoleNames.Contains("Student")) </h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-header">Inventory Totals</div>
+            <div class="card-body d-flex justify-content-evenly">
+                <h5> Quantity: @Model.Items.Sum(i => i.Quantity)</h5>
+                <h5> Weight: @Model.Items.Sum(i => i.Weight * i.Quantity)</h5>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<br />
+
+@* tables here*@
+@* might consider making it two rows, since the new tables are wider than before*@
+<div class="row align-content-center justify-content-evenly">
+
+    <div class="col-12 col-lg-6"> @*Made it so that table either takes up full screen or half screen (6/12 or 12/12 columns)*@
+        <div class="card h-100">
+            <div class="card-header"> Users</div>
+            <div class="card-body">
+                @Html.Partial("_UserTable", Model.Users)
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <div class="card h-100">
+            <div class="card-header"> Items</div>
+            <div class="card-body">
+                @Html.Partial("_ItemsTable", Model.Items)
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready( function () {
+            $('#userTable').DataTable({
+                columnDefs: [ 
+                    {
+                        target: 2, //Remove search and order from the edit buttons
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
+            });
+
+            $('#itemTable').DataTable({
+                
+                columnDefs: [ //Hide columns from items table (description and points)
+                    {
+                        target: 1,
+                        visible: false,
+                        searchable: false
+                    },
+                    {
+                        target: 2,
+                        visible: false,
+                        searchable: false,
+                    },
+                    {
+                        target: 6,
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
+            });
+        } );
+    </script>
+
+}
+
+<style>
+    .card-header {
+        background-color: #004e8c; /*color picked from scc website*/
+        color: white;
+    }
+
+    /* div.dt-container {
+        overflow: auto;
+        justify-content: space-evenly;
+        align-content: center;
+    } */
+</style>

@@ -1,0 +1,140 @@
+﻿@model StaticPage
+
+@{
+    ViewData["Title"] = "Contact";
+}
+
+<div class="container py-4">
+    <h2 class="text-center mb-4">Meet the Team</h2>
+
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <img src="images/LerKeshia_Littlejohn.webp" alt="LerKeshia Littlejohn" class="img-fluid rounded-circle mb-3" style="width: 200px; height: 200px; object-fit: cover;">
+            <h5><strong>LerKeshia Littlejohn</strong></h5>
+            <p>Pantry Manager</p>
+            <p>Phone: (864) 592-4060</p>
+            <p>Email: <a href="mailto:SCCPantry@sccsc.edu">SCCPantry@sccsc.edu</a></p>
+            <p>Office: JAP C03</p>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <img src="images/Sommer_T_Means.webp" alt="Sommer T. Means" class="img-fluid rounded-circle mb-3" style="width: 200px; height: 200px; object-fit: cover;">
+            <h5><strong>Sommer T. Means</strong></h5>
+            <p>Higher Ed Community Resource Coordinator</p>
+            <p>Phone: (864) 913-7762</p>
+            <p>Email: <a href="mailto:meanss@sccsc.edu">meanss@sccsc.edu</a></p>
+            <p>Office: JAP C03</p>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <img src="images/Daniel_Francis.webp" alt="Daniel Francis" class="img-fluid rounded-circle mb-3" style="width: 200px; height: 200px; object-fit: cover;">
+            <h5><strong>Daniel Francis, MEd.</strong></h5>
+            <p>Director of Student Compliance and Engagement<br>/ Title IX Coordinator</p>
+            <p>Phone: (864) 592-4424</p>
+            <p>Email: <a href="mailto:francisd@sccsc.edu">francisd@sccsc.edu</a></p>
+            <p>Office: JAP C20 B</p>
+        </div>
+    </div>
+</div>
+
+
+<div class="container py-4">
+    <h1 class="mb-4 text-center">Contact Us</h1>
+
+    <!-- Pantry Info Row -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-8 text-center">
+            <h3>Pantry Team</h3>
+            <p>
+                <strong>Email:</strong> <a href="mailto:sccpantry@sccsc.edu">sccpantry@sccsc.edu</a><br />
+                <strong>Location:</strong> Powers Building, C3 (Behind the Student HUB)<br />
+                <strong>Hours of Operation:</strong><br />
+                Monday - Thursday<br />
+                9:00 AM - 2:00 PM<br />
+                <small class="text-muted">
+                    Need access outside of operating hours? Email us.
+                </small>
+            </p>
+        </div>
+    </div>
+
+    <!-- Support Contacts Row -->
+    <div class="row">
+        <h1 class="mb-4 text-center">Additional Support</h1>
+        <!-- IT Helpdesk -->
+        <div class="col-md-4 mb-4">
+            <h3>IT Helpdesk</h3>
+            <p>
+                <strong>Email:</strong> <a href="mailto:ITSupport@sccsc.edu">ITSupport@sccsc.edu</a><br />
+                <strong>Phone:</strong> 864-592-4682<br />
+                <strong>Phone:</strong> 877-722-2754
+            </p>
+            <p>
+                <strong>SCC Giles Campus:</strong><br />
+                Ledbetter Building, Suite 110
+            </p>
+            <p>
+                <strong>SCC Downtown Campus:</strong><br />
+                Evans Academic Center, Room 180
+            </p>
+            <p>
+                <strong>SCC Cherokee County Campus:</strong><br />
+                L. Hoke Parris Building, Room 104A
+            </p>
+            <p>
+                <strong>SCC Tyger River Campus:</strong><br />
+                Tyger River Building, Room 326
+            </p>
+            
+        </div>
+
+        <!-- Campus Police -->
+        <div class="col-md-4 mb-4">
+            <h3>Campus Police</h3>
+            <p>
+                <strong>Giles Main Campus:</strong><br />
+                (864) 592-4911<br />
+                <a href="mailto:CampusPolice@sccsc.edu">CampusPolice@sccsc.edu</a>
+            </p>
+            <p>
+                <strong>Cherokee Campus - Officer Daniel Owens:</strong><br />
+                (864) 357-5878<br />
+                <a href="mailto:Owenst@sccsc.edu">Owenst@sccsc.edu</a>
+            </p>
+            <p>
+                <strong>Tyger River Campus - Officer Ricky Blanton:</strong><br />
+                (864) 357-8545<br />
+                <a href="mailto:Blantonr@sccsc.edu">Blantonr@sccsc.edu</a>
+            </p>
+            <p>
+                <strong>Evans & Union Campuses - Cpt. Keith Egan:</strong><br />
+                (864) 592-4911<br />
+                <a href="mailto:CampusPolice@sccsc.edu">CampusPolice@sccsc.edu</a>
+            </p>
+        </div>
+
+        <!-- Suicide Hotline -->
+        <div class="col-md-4 mb-4">
+            <h3>Suicide & Crisis Lifeline</h3>
+            <p>
+                Dial <strong>1-800-273-8255</strong> for 24/7, free and confidential support.
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col text-center">
+            <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back to Home</a>
+        </div>
+    </div>
+</div>
+@* @if (Model?.HtmlContent != null)
+{
+    @Html.Raw(Model.HtmlContent)
+}
+else
+{
+    <!-- Fallback to an error message if no static pages exist... -->
+    <h1>Welcome</h1>
+    <p>Error loading content... Please contact the site administrator at sccpantry@sccsc.edu</p>
+} *@

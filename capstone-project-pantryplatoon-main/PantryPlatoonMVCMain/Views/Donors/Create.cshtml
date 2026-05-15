@@ -1,0 +1,221 @@
+﻿@model PantryPlatoonMVCMain.ViewModels.DonorDonationViewModel
+
+@{
+    ViewData["Title"] = "Create Donor & Donation";
+}
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.8/inputmask.min.js"></script>
+</head>
+
+<h1>Donation Form</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <h4>Donor Info</h4>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Donor.DonorName" class="control-label">Donor Name</label>
+                <input asp-for="Donor.DonorName" class="form-control" />
+                <span asp-validation-for="Donor.DonorName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Donor.Email" class="control-label">Email</label>
+                <input asp-for="Donor.Email" class="form-control" />
+                <span asp-validation-for="Donor.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Donor.PhoneNumber" class="control-label">Phone Number</label>
+                <input asp-for="Donor.PhoneNumber" id="phone" type="tel" class="form-control" placeholder="(123) 456-7890" maxlength="16"/>
+                <span asp-validation-for="Donor.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Which Campus?</label>
+                <div class="col-md-5" style="min-width: 200px;">
+                    <select asp-for="CampusId" class="form-control category-dropdown" asp-items="@(new SelectList(Model.Campuses, "CampusId", "CampusName"))">
+                        <option value="">-- Select Campus --</option>
+                    </select>
+                    <span asp-validation-for="CampusId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <h4 class="mt-4">Donation Items</h4>
+            <div id="donation-list">
+                @for (int i = 0; i < Model.Donations.Count; i++)
+                {
+                    <div class="row mb-3">
+                        <!-- Category dropdown -->
+                        <div class="col-md-5" style="min-width: 200px;">
+                            <label>Category</label>
+                            <select class="form-control category-dropdown" data-index="@i">
+                                <option value="">-- Select Category --</option>
+                                @foreach (var category in Model.Categories)
+                                {
+                                    <option value="@category.ItemCategoryId">@category.ItemCategoryName</option>
+                                }
+                            </select>
+                        </div>
+
+                        <!-- Item dropdown -->
+                        <div class="col-md-5" style="min-width: 200px;">
+                            <label>Item</label>
+                            <select name="Donations[@i].ItemName" class="form-control item-dropdown" data-index="@i" disabled>
+                                <option value="">-- Select Item --</option>
+                                @foreach (var item in Model.ItemEntries)
+                                {
+                                    <option value="@item.ItemName" data-category="@item.ItemCategoryId">
+                                        @item.ItemName
+                                    </option>
+                                }
+                            </select>
+                        </div>
+
+                        <!-- Quantity -->
+                        <div class="col-md-4" style="min-width: 50px;">
+                            <label>Qty</label>
+                            <input type="number" name="Donations[@i].Quantity" class="form-control" min="1" />
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <button type="button" id="add-entry" class="btn btn-secondary mb-3">+ Add Item</button>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+        </form>
+
+        @section Scripts {
+            @await Html.PartialAsync("_ValidationScriptsPartial")
+
+            @* <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.8/inputmask.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.8/bindings/inputmask.binding.min.js"></script> *@
+
+            <script>
+                let donationIndex = @(Model.Donations.Count);
+
+                function generateCategoryOptions() {
+                    return `
+                @foreach (var cat in Model.Categories)
+                {
+                    <text><option value="@cat.ItemCategoryId">@cat.ItemCategoryName</option></text>
+                }
+                    `;
+                }
+
+                function generateItemOptions() {
+                    return `
+                @foreach (var item in Model.ItemEntries)
+                {
+                    <text><option value="@item.ItemName" data-category="@item.ItemCategoryId">@item.ItemName</option></text>
+                }
+                    `;
+                }
+
+                document.getElementById("add-entry").addEventListener("click", function () {
+                    const container = document.getElementById("donation-list");
+
+                    const entry = document.createElement("div");
+                    entry.className = "donation-entry border rounded p-3 mb-2";
+                    entry.innerHTML = `
+                        <div class="row mb-3">
+                            <div class="col-md-5" style="min-width: 200px;">
+                                <label>Category</label>
+                                <select class="form-control category-dropdown" data-index="${donationIndex}">
+                                    <option value="">-- Select Category --</option>
+                                    ${generateCategoryOptions()}
+                                </select>
+                            </div>
+
+                            <div class="col-md-5" style="min-width: 200px;">
+                                <label>Item</label>
+                                <select name="Donations[${donationIndex}].ItemName" class="form-control item-dropdown" data-index="${donationIndex}" disabled>
+                                    <option value="">-- Select Item --</option>
+                                    ${generateItemOptions()}
+                                </select>
+                            </div>
+
+                            <div class="col-md-3" style="min-width: 120px;">
+                                <label>Qty</label>
+                                <input type="number" name="Donations[${donationIndex}].Quantity" class="form-control" min="1" />
+                            </div>
+
+                            <div class="col-md-1 d-flex align-items-end justify-content-center">
+                                <button type="button" class="btn btn-danger remove-entry">−</button>
+                            </div>
+                        </div>
+                    `;
+
+                    container.appendChild(entry);
+                    donationIndex++;
+                });
+
+                document.addEventListener("click", function (e) {
+                    if (e.target && e.target.classList.contains("remove-entry")) {
+                        e.target.closest(".donation-entry").remove();
+                    }
+                });
+
+                document.addEventListener('change', function (e) {
+                    if (e.target && e.target.classList.contains('category-dropdown')) {
+                        const index = e.target.dataset.index;
+                        const selectedCategoryId = e.target.value;
+
+                        const itemDropdown = document.querySelector(`.item-dropdown[data-index="${index}"]`);
+                        itemDropdown.value = "";
+
+                        if (selectedCategoryId === "") {
+                            itemDropdown.disabled = true;
+                            return;
+                        }
+
+                        itemDropdown.disabled = false;
+
+                        itemDropdown.querySelectorAll("option").forEach(option => {
+                            const itemCat = option.getAttribute("data-category");
+                            if (!itemCat) return;
+                            option.style.display = (itemCat === selectedCategoryId) ? "block" : "none";
+                        });
+                    }
+                });
+
+
+                window.addEventListener('load', () => {
+                    const phoneInput = document.querySelector('#phone');
+                    phoneInput.addEventListener('keydown', disallowNonNumericInput);
+                    phoneInput.addEventListener('keyup', formatToPhone);
+                });
+
+                const disallowNonNumericInput = (evt) => {
+                    if (evt.ctrlKey) return;
+                    if (evt.key.length > 1) return;
+                    if (/[0-9]/.test(evt.key)) return;
+                    evt.preventDefault();
+                };
+
+                const formatToPhone = (evt) => {
+                    const digits = evt.target.value.replace(/\D/g, '').substring(0, 10);
+                    const areaCode = digits.substring(0, 3);
+                    const prefix = digits.substring(3, 6);
+                    const suffix = digits.substring(6, 10);
+
+                    if (digits.length > 6) {
+                        evt.target.value = `(${areaCode}) ${prefix} - ${suffix}`;
+                    } else if (digits.length > 3) {
+                        evt.target.value = `(${areaCode}) ${prefix}`;
+                    } else if (digits.length > 0) {
+                        evt.target.value = `(${areaCode}`;
+                    }
+                };
+               
+            </script>
+        }
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Home" asp-action="Index">Return to Home</a>
+</div>
+

@@ -1,0 +1,61 @@
+﻿@model PantryPlatoonMVCMain.Models.VolunteerRequest
+
+@{
+    ViewData["Title"] = "Volunteer Request";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0"><i class="fas fa-calendar-plus me-2"></i>Request a Volunteer Slot</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small">Fill out this form to request a shift. An administrator will review your request and add it to the public schedule once approved.</p>
+                    <hr />
+
+                    <form asp-action="RequestShift">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="VolunteerName" class="form-label font-weight-bold">Full Name</label>
+                            <input asp-for="VolunteerName" class="form-control" placeholder="Enter your name" />
+                            <span asp-validation-for="VolunteerName" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="RequestedDate" class="form-label font-weight-bold">Desired Date</label>
+                                <input asp-for="RequestedDate" class="form-control" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                                <span asp-validation-for="RequestedDate" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="HoursRequested" class="form-label font-weight-bold">Duration (Hours)</label>
+                                <input asp-for="HoursRequested" class="form-control" type="number" step="0.5" min="0.5" max="24" value="1.0" />
+                                <span asp-validation-for="HoursRequested" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="JobDescription" class="form-label font-weight-bold">Preferred Tasks</label>
+                            <textarea asp-for="JobDescription" class="form-control" rows="3" placeholder="e.g. Food sorting, shelf stocking, greeting donors..."></textarea>
+                            <span asp-validation-for="JobDescription" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a asp-action="Index" class="btn btn-secondary me-md-2">Cancel</a>
+                            <button type="submit" class="btn btn-success">Submit Request</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,83 @@
+﻿@model IEnumerable<PantryPlatoonMVCMain.Models.Visit>
+
+@{
+    ViewData["Title"] = "Visits";
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+<div class="card h-100">
+    <div class="card-header">Visits</div>
+    <div class="card-body">
+        <table id="visitTable" class="table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.VisitDate)</th>
+                    <th>@Html.DisplayNameFor(model => model.TotalWeight)</th>
+                    <th>@Html.DisplayNameFor(model => model.Notes)</th>
+                    <th>Scheduled Pickup</th>
+                    <th>Is Scheduled?</th>
+                    <th>Campus</th>
+                    <th>User</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.VisitDate</td>
+                        <td>@item.TotalWeight</td>
+                        <td>@item.Notes</td>
+                        <td>@item.ScheduledPickupTime?.ToString("g")</td>
+                        <td>@(item.IsScheduledVisit ? "Yes" : "No")</td>
+                        <td>@item.Campus?.CampusName</td>
+                        <td>@item.User?.FirstName @item.User?.LastName</td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <a asp-action="Edit" asp-route-id="@item.VisitId" class="btn btn-success btn-sm">Edit</a>
+                                <a asp-action="Details" asp-route-id="@item.VisitId" class="btn btn-primary btn-sm">Details</a>
+                                <a asp-action="Delete" asp-route-id="@item.VisitId" class="btn btn-danger btn-sm">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+
+            $('#visitTable').DataTable({
+                searching: true,
+                pageLength: 25,
+                order: [[0, 'desc']], // Sort by VisitDate column
+                columnDefs: [
+                    {
+                        targets: [0], // VisitDate column
+                        type: 'date'  // Tell DataTables this is a date column
+                    }
+                ]
+            });
+        });
+    </script>
+
+}
+
+<style>
+
+    .card-header {
+        background-color: #004e8c; /*color picked from scc website*/
+        color: white;
+    }
+
+    .dt-input {
+        margin-right: 8px;
+    }
+
+</style>

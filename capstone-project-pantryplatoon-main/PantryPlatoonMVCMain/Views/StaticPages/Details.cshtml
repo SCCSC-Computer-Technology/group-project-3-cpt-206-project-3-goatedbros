@@ -1,0 +1,9 @@
+﻿@model PantryPlatoonMVCMain.Models.StaticPage
+
+@{
+    ViewData["Title"] = Model.PageName;
+}
+
+<div>
+    @Html.Raw(Model.HtmlContent)
+</div>

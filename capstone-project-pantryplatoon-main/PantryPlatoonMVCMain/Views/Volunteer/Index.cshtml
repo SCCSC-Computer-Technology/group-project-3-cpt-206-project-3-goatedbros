@@ -1,0 +1,85 @@
+﻿@model IEnumerable<PantryPlatoonMVCMain.Models.VolunteerShift>
+
+@{
+    ViewData["Title"] = "Volunteer Management";
+    bool isAdmin = User.IsInRole("Admin");
+}
+
+<div class="container mt-4">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Volunteer Schedule</h1>
+        <div>
+            @if (isAdmin)
+            {
+                <a asp-action="ManageRequests" class="btn btn-warning me-2">
+                    <i class="fas fa-clipboard-list"></i> Review Pending Requests
+                </a>
+                <a asp-action="Create" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Schedule Direct Shift
+                </a>
+            }
+            else
+            {
+                <a asp-action="RequestShift" class="btn btn-success">
+                    <i class="fas fa-calendar-plus"></i> Request to Volunteer
+                </a>
+            }
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Volunteer Name</th>
+                        <th>Date</th>
+                        <th>Hours</th>
+                        <th>Tasks</th>
+                        @if (isAdmin)
+                        {
+                            <th class="text-center">Actions</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.VolunteerName</td>
+                            <td>@item.ShiftDate.ToShortDateString()</td>
+                            <td>@item.HoursTracked hrs</td>
+                            <td>@item.TaskDescription</td>
+                            @if (isAdmin)
+                            {
+                                <td class="text-center">
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">
+                                        <i class="fas fa-trash"></i> Remove
+                                    </a>
+                                </td>
+                            }
+                        </tr>
+                    }
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="@(isAdmin ? 5 : 4)" class="text-center text-muted py-5">
+                                <p class="mb-0">No shifts are currently scheduled on the calendar.</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

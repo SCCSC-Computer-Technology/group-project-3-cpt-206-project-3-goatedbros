@@ -1,0 +1,150 @@
+﻿@model PantryPlatoonMVCMain.ViewModels.StaticPagesViewModel
+
+@{
+    ViewData["Title"] = "Manage Static Pages";
+}
+
+<h2 class="mt-4">Manage Static Pages</h2>
+<p class="text-muted">Edit the content that displays on areas like the Home page.</p>
+
+<!--<div class="mb-3">
+    <a asp-action="Create" class="btn btn-success">
+        <i class="fas fa-plus"></i> Create New Page
+    </a>
+</div>-->
+
+<div class="row">
+    <!-- Iterate through all of the static pages. -->
+    <h4 class="mb-3">
+        <i class="fas fa-home text-primary"></i> Main Pages
+    </h4>
+    @foreach (var item in Model.MainPages)
+    {
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">@item.PageName</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Check if there is any page content. If not, show a placeholder. -->
+                    @if (!string.IsNullOrEmpty(item.HtmlContent))
+                    {
+                        <div class="preview-container mb-3 flex-grow-1">
+                            <div class="preview-header d-flex justify-content-between align-items-center mb-2">
+                                <small class="text-muted">
+                                    <i class="fas fa-eye me-1"></i>Live Preview
+                                </small>
+                            </div>
+                            <div class="iframe-container" style="height: 150px; border: 1px solid #dee2e6; border-radius: 6px; overflow: hidden;">
+                                <iframe id="preview-@item.PageId"
+                                        srcdoc="@Html.Raw(System.Web.HttpUtility.HtmlEncode(item.HtmlContent))"
+                                        style="width: 100%; height: 100%; border: none; transform: scale(0.8); transform-origin: top left; width: 125%;"
+                                        sandbox="allow-same-origin">
+                                </iframe>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="preview-container mb-3 flex-grow-1">
+                            <div class="empty-preview d-flex flex-column align-items-center justify-content-center" style="height: 150px; border: 2px dashed #dee2e6; border-radius: 6px;">
+                                <i class="fas fa-file-text fa-2x text-muted mb-2"></i>
+                                <p class="text-muted mb-0">No content yet</p>
+                                <small class="text-muted">Click Edit to add content</small>
+                            </div>
+                        </div>
+                    }
+                    <!-- Buttons -->
+                    <div class="btn-group" role="group">
+                        <a asp-action="Edit" asp-route-id="@item.PageId" class="btn btn-primary btn-sm">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <!--<a asp-action="Details" asp-route-id="@item.PageId" class="btn btn-info btn-sm">
+                            <i class="fas fa-eye"></i> View
+                        </a>-->
+                        <!--<a asp-action="Delete" asp-route-id="@item.PageId" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash"></i> Delete
+                        </a>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <!-- Subsections Area -->
+    <h4 class="mb-3 mt-3">
+        <i class="fas fa-file text-primary"></i> Subsections
+    </h4>
+    @foreach (var item in Model.SubsectionPages)
+    {
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">@item.PageName</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Iframe Preview -->
+                    @if (!string.IsNullOrEmpty(item.HtmlContent))
+                    {
+                        <div class="preview-container mb-3 flex-grow-1">
+                            <div class="preview-header d-flex justify-content-between align-items-center mb-2">
+                                <small class="text-muted">
+                                    <i class="fas fa-eye me-1"></i>Live Preview
+                                </small>
+                            </div>
+                            <div class="iframe-container" style="height: 150px; border: 1px solid #dee2e6; border-radius: 6px; overflow: hidden;">
+                                <iframe id="preview-@item.PageId"
+                                        srcdoc="@Html.Raw(System.Web.HttpUtility.HtmlEncode(item.HtmlContent))"
+                                        style="width: 100%; height: 100%; border: none; transform: scale(0.8); transform-origin: top left; width: 125%;"
+                                        sandbox="allow-same-origin">
+                                </iframe>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="preview-container mb-3 flex-grow-1">
+                            <div class="empty-preview d-flex flex-column align-items-center justify-content-center" style="height: 150px; border: 2px dashed #dee2e6; border-radius: 6px;">
+                                <i class="fas fa-file-text fa-2x text-muted mb-2"></i>
+                                <p class="text-muted mb-0">No content yet</p>
+                                <small class="text-muted">Click Edit to add content</small>
+                            </div>
+                        </div>
+                    }
+                    <!-- Buttons -->
+                    <div class="btn-group" role="group">
+                        <a asp-action="Edit" asp-route-id="@item.PageId" class="btn btn-primary btn-sm">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (!Model.MainPages.Any())
+{
+    <div class="alert alert-info">
+        <h4>No main pages found</h4>
+        <p>Get started by creating your first static page.</p>
+        <a asp-action="Create" class="btn btn-primary">Create Page</a>
+    </div>
+}
+
+@if (!Model.SubsectionPages.Any())
+{
+    <div class="alert alert-info">
+        <h4>No subsection pages found</h4>
+        <p>Get started by creating your first static page.</p>
+        <a asp-action="Create" class="btn btn-primary">Create Page</a>
+    </div>
+}
+
+<style>
+
+    .card-header {
+        background-color: #004e8c; /*color picked from scc website*/
+        color: white;
+    }
+
+</style>
