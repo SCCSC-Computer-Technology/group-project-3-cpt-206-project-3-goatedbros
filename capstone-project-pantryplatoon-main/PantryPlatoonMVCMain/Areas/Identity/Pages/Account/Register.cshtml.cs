@@ -74,7 +74,8 @@ namespace PantryPlatoonMVCMain.Areas.Identity.Pages.Account
         /// </summary>
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
-        public SelectList CampusList { get; set; } = new SelectList(new List<Campus>(), "CampusId", "CampusName");
+        public SelectList CampusList { get; set; }
+
         public StaticPage RulesPage { get; set; }
         public StaticPage LiabilityPage { get; set; }
 
@@ -155,57 +156,6 @@ namespace PantryPlatoonMVCMain.Areas.Identity.Pages.Account
             [Range(typeof(bool), "true", "true", ErrorMessage = "You must accept the liability waiver to register.")]
             [Display(Name = "I have read and agree to the liability waiver")]
             public bool AcceptLiability { get; set; }
-            [Required]
-            [Range(16, 100)]
-            [Display(Name = "Age")]
-            public int? Age { get; set; }
-
-            [Required]
-            [Display(Name = "Adults in Household")]
-            public int? AdultsInHousehold { get; set; }
-
-            [Required]
-            [Display(Name = "Children 0-5")]
-            public int? ChildrenUnder5 { get; set; }
-
-            [Required]
-            [Display(Name = "Children 5-18")]
-            public int? Children5To18 { get; set; }
-
-            [Required]
-            [Display(Name = "Student Status")]
-            public string StudentStatus { get; set; }
-
-            [Required]
-            [Display(Name = "Employment Status")]
-            public string EmploymentStatus { get; set; }
-
-            [Display(Name = "Household Employment Status")]
-            public string HouseholdEmploymentStatus { get; set; }
-
-            [Required]
-            [Display(Name = "Benefits Status")]
-            public string BenefitsStatus { get; set; }
-
-            [Required]
-            [Display(Name = "Kitchen Access")]
-            public string KitchenAccess { get; set; }
-
-            [Required]
-            [Display(Name = "Dietary Restrictions")]
-            public bool HasDietaryRestrictions { get; set; }
-
-            [Display(Name = "Dietary Restriction Explanation")]
-            public string DietaryRestrictionExplanation { get; set; }
-
-            [Display(Name = "Specialty Items Needed")]
-            public string SpecialtyItemsNeeded { get; set; }
-
-            [Display(Name = "Specialty Items Explanation")]
-            public string SpecialtyItemsExplanation { get; set; }
-
-            [Display(Name = "Additional Notes")]
-            public string AdditionalNotes { get; set; }
 
         }
 
@@ -221,13 +171,9 @@ namespace PantryPlatoonMVCMain.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
-
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            await LoadCampusListAsync();
-            await LoadStaticPagesAsync();
-
-            // Check if SCCId already exists
+            // Check if SCCId already exists in UserOld table
             var existingUser = await _userManager.Users
                 .FirstOrDefaultAsync(u => u.SCCId == Input.SCCId);
 
@@ -238,9 +184,12 @@ namespace PantryPlatoonMVCMain.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
+                // Checks if registering account is an sccsc.edu account
                 if (!Input.Email.EndsWith("@sccsc.edu", StringComparison.OrdinalIgnoreCase))
                 {
                     ModelState.AddModelError("Input.Email", "You must use your official school email to register.");
+
+
                     return Page();
                 }
 
@@ -250,24 +199,9 @@ namespace PantryPlatoonMVCMain.Areas.Identity.Pages.Account
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
                 user.CampusId = Input.CampusId;
-                user.Age = Input.Age;
-                user.AdultsInHousehold = Input.AdultsInHousehold;
-                user.ChildrenUnder5 = Input.ChildrenUnder5;
-                user.Children5To18 = Input.Children5To18;
-                user.StudentStatus = Input.StudentStatus;
-                user.EmploymentStatus = Input.EmploymentStatus;
-                user.HouseholdEmploymentStatus = Input.HouseholdEmploymentStatus;
-                user.BenefitsStatus = Input.BenefitsStatus;
-                user.KitchenAccess = Input.KitchenAccess;
-                user.HasDietaryRestrictions = Input.HasDietaryRestrictions;
-                user.DietaryRestrictionExplanation = Input.DietaryRestrictionExplanation;
-                user.SpecialtyItemsNeeded = Input.SpecialtyItemsNeeded;
-                user.SpecialtyItemsExplanation = Input.SpecialtyItemsExplanation;
-                user.AdditionalNotes = Input.AdditionalNotes;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -284,7 +218,6 @@ namespace PantryPlatoonMVCMain.Areas.Identity.Pages.Account
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
@@ -298,17 +231,21 @@ namespace PantryPlatoonMVCMain.Areas.Identity.Pages.Account
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                     }
-
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
+                    else
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return LocalRedirect(returnUrl);
+                    }
                 }
-
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
 
+            // If we got this far, something failed, redisplay form
+            await LoadCampusListAsync();
+            await LoadStaticPagesAsync();
             return Page();
         }
 

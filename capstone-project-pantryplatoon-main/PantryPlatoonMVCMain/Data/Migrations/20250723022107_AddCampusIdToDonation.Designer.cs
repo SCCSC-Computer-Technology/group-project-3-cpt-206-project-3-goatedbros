@@ -9,11 +9,11 @@ using PantryPlatoonMVCMain.Data;
 
 #nullable disable
 
-namespace PantryPlatoonMVCMain.Migrations
+namespace PantryPlatoonMVCMain.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260428005155_InitialSetup")]
-    partial class InitialSetup
+    [Migration("20250723022107_AddCampusIdToDonation")]
+    partial class AddCampusIdToDonation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -473,7 +473,7 @@ namespace PantryPlatoonMVCMain.Migrations
                     b.HasKey("PageId")
                         .HasName("PK__StaticPa__C565B104383F3B0F");
 
-                    b.ToTable("StaticPages", (string)null);
+                    b.ToTable("StaticPages");
                 });
 
             modelBuilder.Entity("PantryPlatoonMVCMain.Models.Visit", b =>

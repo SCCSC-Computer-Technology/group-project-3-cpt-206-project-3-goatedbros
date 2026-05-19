@@ -1,95 +1,320 @@
 ﻿@model PantryPlatoonMVCMain.Models.Item
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Item";
 }
 
-<h1>Edit</h1>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
 
-<h4>Item</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ItemId" />
-            <input type="hidden" asp-for="ImagePath" />
-            <div class="form-group">
-                <label asp-for="ItemName" class="control-label">Name</label>
-                <input asp-for="ItemName" class="form-control" />
-                <span asp-validation-for="ItemName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItemCategoryId" class="control-label">Category</label>
-                <select asp-for="ItemCategoryId" class="form-control" asp-items="ViewBag.ItemCategoryId"></select>
-                <span asp-validation-for="ItemCategoryId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Points" class="control-label"></label>
-                <input asp-for="Points" class="form-control" />
-                <span asp-validation-for="Points" class="text-danger"></span>
-            </div>
-            <div class="form-group" hidden="true">
-                <label asp-for="Quantity" class="control-label"></label>
-                <input asp-for="Quantity" class="form-control" />
-                <span asp-validation-for="Quantity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Weight" class="control-label"></label>
-                <input asp-for="Weight" class="form-control" />
-                <span asp-validation-for="Weight" class="text-danger"></span>
-            </div>
-
-            @if (!string.IsNullOrEmpty(Model.ImagePath))
-            {
-                <div class="form-group">
-                    <label class="control-label">Current Image</label>
-                    <div>
-                        <img src="@Model.ImageUrl" alt="@Model.ItemName" class="img-thumbnail" style="max-width: 200px; max-height: 200px;" />
-                    </div>
-                    <div class="mt-2">
-                        <a asp-action="DeleteImage" asp-route-id="@Model.ItemId" class="btn btn-secondary btn-sm">
-                            Remove Image
-                        </a>
-                    </div>
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2><i class="fas fa-edit text-success"></i> Edit Item</h2>
+                    <p class="text-muted">Update item details, category information, and image</p>
                 </div>
-            }
 
-            <!-- Image upload -->
-            <div class="form-group">
-                <label for="imageFile" class="control-label">
-                    @(string.IsNullOrEmpty(Model.ImagePath) ? "Upload Image" : "Replace Image")
-                </label>
-                <input type="file" name="imageFile" id="imageFile" class="form-control" accept="image/*" />
-                <small class="form-text text-muted">
-                    @(string.IsNullOrEmpty(Model.ImagePath) ? "Upload an image for this item" : "Replace image")
-                    (JPG, PNG, GIF, etc.)
-                </small>
+                <div class="d-flex flex-column gap-2">
+                    <a asp-controller="Inventory" asp-action="Manage" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Manage Inventory
+                    </a>
+                </div>
             </div>
 
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <!-- Form Card -->
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-box"></i> Item Information
+                    </h5>
+                </div>
+
+                <div class="card-body">
+
+                    <form asp-action="Edit" enctype="multipart/form-data" class="needs-validation" novalidate>
+
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <input type="hidden" asp-for="ItemId" />
+                        <input type="hidden" asp-for="ImagePath" />
+
+                        <!-- Item Name -->
+                        <div class="mb-3">
+                            <label asp-for="ItemName" class="form-label required">
+                                <i class="fas fa-tag"></i> Item Name
+                            </label>
+                            <input asp-for="ItemName" class="form-control" required />
+                            <span asp-validation-for="ItemName" class="text-danger"></span>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label">
+                                <i class="fas fa-align-left"></i> Description
+                            </label>
+                            <input asp-for="Description" class="form-control" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <!-- Category -->
+                        <div class="mb-3">
+                            <label asp-for="ItemCategoryId" class="form-label required">
+                                <i class="fas fa-folder"></i> Category
+                            </label>
+
+                            <select asp-for="ItemCategoryId"
+                                    class="form-select"
+                                    asp-items="ViewBag.ItemCategoryId"
+                                    required>
+                            </select>
+
+                            <span asp-validation-for="ItemCategoryId" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+
+                            <!-- Points -->
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Points" class="form-label">
+                                    <i class="fas fa-star"></i> Points Value
+                                </label>
+
+                                <input asp-for="Points" class="form-control" />
+
+                                <span asp-validation-for="Points" class="text-danger"></span>
+                            </div>
+
+                            <!-- Weight -->
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Weight" class="form-label">
+                                    <i class="fas fa-weight-hanging"></i> Weight
+                                </label>
+
+                                <input asp-for="Weight" class="form-control" />
+
+                                <span asp-validation-for="Weight" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <!-- Hidden Quantity -->
+                        <div class="form-group" hidden="true">
+                            <label asp-for="Quantity" class="control-label"></label>
+                            <input asp-for="Quantity" class="form-control" />
+                            <span asp-validation-for="Quantity" class="text-danger"></span>
+                        </div>
+
+                        <!-- Current Image -->
+                        @if (!string.IsNullOrEmpty(Model.ImagePath))
+                        {
+                            <div class="mb-4">
+                                <label class="form-label">
+                                    <i class="fas fa-image"></i> Current Image
+                                </label>
+
+                                <div class="card" style="max-width: 250px;">
+                                    <img src="@Model.ImageUrl"
+                                         alt="@Model.ItemName"
+                                         class="card-img-top"
+                                         style="height: 200px; object-fit: cover;" />
+
+                                    <div class="card-body text-center py-2">
+                                        <small class="text-muted">@Model.ItemName</small>
+                                    </div>
+                                </div>
+
+                                <div class="mt-3">
+                                    <a asp-action="DeleteImage"
+                                           asp-route-id="@Model.ItemId"
+                                           class="btn btn-outline-danger btn-sm">
+                                        <i class="fas fa-trash"></i> Remove Image
+                                    </a>
+                                </div>
+                            </div>
+                        }
+
+                        <!-- Image Upload -->
+                        <div class="mb-3">
+                            <label for="imageFile" class="form-label">
+                                <i class="fas fa-camera"></i>
+                                @(string.IsNullOrEmpty(Model.ImagePath) ? "Upload Image" : "Replace Image")
+                            </label>
+
+                            <input type="file"
+                                   name="imageFile"
+                                   id="imageFile"
+                                   class="form-control"
+                                   accept="image/*"
+                                   onchange="previewImage(this)" />
+
+                            <small class="form-text text-muted">
+                                <i class="fas fa-info-circle"></i>
+                                @(string.IsNullOrEmpty(Model.ImagePath)
+                                    ? "Upload an image for this item"
+                                    : "Replace current image")
+                                (JPG, PNG, GIF, etc.)
+                            </small>
+
+                            <!-- Preview -->
+                            <div id="imagePreview" class="mt-3" style="display: none;">
+                                <div class="card" style="max-width: 250px;">
+                                    <img id="previewImg"
+                                         src="#"
+                                         alt="Image preview"
+                                         class="card-img-top"
+                                         style="height: 200px; object-fit: cover;">
+
+                                    <div class="card-body text-center py-2">
+                                        <small class="text-muted">New Image Preview</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Info Panel -->
+                        <div class="alert alert-info" role="alert">
+                            <h6>
+                                <i class="fas fa-info-circle"></i> Editing Information:
+                            </h6>
+
+                            <ul class="mb-0">
+                                <li>Update item details and category information</li>
+                                <li>You may replace or remove the current image</li>
+                                <li>Changes will apply to this item immediately</li>
+                                <li>Quantity is preserved automatically</li>
+                            </ul>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="d-flex justify-content-between pt-3 border-top">
+                            <div>
+                                <a asp-controller="Items"
+                                       asp-action="Delete"
+                                       asp-route-id="@Model.ItemId"
+                                       class="btn btn-danger">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <a asp-controller="Inventory"
+                                       asp-action="Manage"
+                                       class="btn btn-secondary">
+                                    <i class="fas fa-times"></i> Cancel
+                                </a>
+
+                                <button type="submit" class="btn btn-success btn-lg">
+                                    <i class="fas fa-save"></i> Save Changes
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div class="mt-3">
-    <a asp-controller="Items" asp-action="Delete" asp-route-id="@Model.ItemId" class="btn btn-danger">Delete</a>
-</div>
+<style>
+    .required::after {
+        content: " *";
+        color: #dc3545;
+        font-weight: bold;
+    }
 
-<div>
-    <a asp-controller="Admin" asp-action="Index">Back to List</a>
-</div>
+    .card {
+        border: none;
+        border-radius: 10px;
+    }
+
+    .card-header {
+        border-radius: 10px 10px 0 0 !important;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+    .alert-info {
+        background-color: #e7f3ff;
+        border-color: #b3d7ff;
+        color: #0c5460;
+    }
+
+    .bg-light {
+        background-color: #f8f9fa !important;
+    }
+</style>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-}
 
+    <script>
+        function previewImage(input) {
+            const preview = document.getElementById('imagePreview');
+            const previewImg = document.getElementById('previewImg');
+
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    previewImg.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+
+                reader.readAsDataURL(file);
+            }
+            else {
+                preview.style.display = 'none';
+            }
+        }
+
+        // Bootstrap validation
+        (function () {
+            'use strict';
+
+            window.addEventListener('load', function () {
+
+                var forms = document.getElementsByClassName('needs-validation');
+
+                var validation = Array.prototype.filter.call(forms, function (form) {
+
+                    form.addEventListener('submit', function (event) {
+
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+
+                        form.classList.add('was-validated');
+
+                    }, false);
+                });
+
+            }, false);
+
+        })();
+
+        // Autofocus
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelector('input[name="ItemName"]').focus();
+        });
+    </script>
+}

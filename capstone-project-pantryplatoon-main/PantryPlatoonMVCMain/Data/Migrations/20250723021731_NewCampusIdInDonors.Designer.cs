@@ -9,11 +9,11 @@ using PantryPlatoonMVCMain.Data;
 
 #nullable disable
 
-namespace PantryPlatoonMVCMain.Migrations
+namespace PantryPlatoonMVCMain.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260515135811_AddDemographicFieldsToUsers")]
-    partial class AddDemographicFieldsToUsers
+    [Migration("20250723021731_NewCampusIdInDonors")]
+    partial class NewCampusIdInDonors
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -202,32 +202,11 @@ namespace PantryPlatoonMVCMain.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("AdditionalNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("AdultsInHousehold")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<string>("BenefitsStatus")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("CampusId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Children5To18")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ChildrenUnder5")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DietaryRestrictionExplanation")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -237,19 +216,7 @@ namespace PantryPlatoonMVCMain.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("EmploymentStatus")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("HasDietaryRestrictions")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("HouseholdEmploymentStatus")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("KitchenAccess")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
@@ -282,15 +249,6 @@ namespace PantryPlatoonMVCMain.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SpecialtyItemsExplanation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SpecialtyItemsNeeded")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StudentStatus")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -515,7 +473,7 @@ namespace PantryPlatoonMVCMain.Migrations
                     b.HasKey("PageId")
                         .HasName("PK__StaticPa__C565B104383F3B0F");
 
-                    b.ToTable("StaticPages", (string)null);
+                    b.ToTable("StaticPages");
                 });
 
             modelBuilder.Entity("PantryPlatoonMVCMain.Models.Visit", b =>
@@ -588,70 +546,6 @@ namespace PantryPlatoonMVCMain.Migrations
                     b.HasIndex("VisitId");
 
                     b.ToTable("VisitItem");
-                });
-
-            modelBuilder.Entity("PantryPlatoonMVCMain.Models.VolunteerRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<double>("HoursRequested")
-                        .HasColumnType("float");
-
-                    b.Property<string>("JobDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("RequestedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VolunteerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("VolunteerRequests", (string)null);
-                });
-
-            modelBuilder.Entity("PantryPlatoonMVCMain.Models.VolunteerShift", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<double>("HoursTracked")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("ShiftDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TaskDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VolunteerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("VolunteerShifts", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

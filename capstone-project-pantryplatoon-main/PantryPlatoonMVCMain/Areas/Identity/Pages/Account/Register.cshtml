@@ -6,7 +6,7 @@
 
 <div>
     <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-10 col-sm-12">
+        <div class="col-lg-5 col-md-7">
             <div class="card-bg">
                 <!-- The actual form -->
                 <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
@@ -46,109 +46,6 @@
                         <input asp-for="Input.LastName" class="form-control" aria-required="true" />
                         <label asp-for="Input.LastName">Last Name</label>
                         <span asp-validation-for="Input.LastName" class="text-danger"></span>
-                    </div>
-
-                    <!-- Demographic Information -->
-                    <h4 class="mt-4 mb-3">Demographic Information</h4>
-
-                    <div class="form-floating mb-3">
-                        <input asp-for="Input.Age"
-                               type="text"
-                               inputmode="numeric"
-                               pattern="[0-9]*"
-                               class="form-control"
-                               />
-                        <label asp-for="Input.Age">Age</label>
-                        <span asp-validation-for="Input.Age" class="text-danger"></span>
-                    </div>
-
-                    <h5 class="mt-4 mb-3">Household Size</h5>
-                    <p class="text-muted small mb-3">
-                        Enter the number of adults and children living in your household.
-                    </p>
-
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-floating mb-3">
-                                <input asp-for="Input.AdultsInHousehold"
-                                       type="text"
-                                       inputmode="numeric"
-                                       pattern="[0-9]*"
-                                       class="form-control"
-                                       />
-                                <label asp-for="Input.AdultsInHousehold">Adults in Household</label>
-                                <span asp-validation-for="Input.AdultsInHousehold" class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-floating mb-3">
-                                <input asp-for="Input.ChildrenUnder5"
-                                       type="text"
-                                       inputmode="numeric"
-                                       pattern="[0-9]*"
-                                       class="form-control"
-                                    />
-                                <label asp-for="Input.ChildrenUnder5">Children Ages 0-5</label>
-                                <span asp-validation-for="Input.ChildrenUnder5" class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-floating mb-3">
-                                <input asp-for="Input.Children5To18"
-                                       type="text"
-                                       inputmode="numeric"
-                                       pattern="[0-9]*"
-                                       class="form-control"
-                                      />
-                                <label asp-for="Input.Children5To18">Children Ages 5-18</label>
-                                <span asp-validation-for="Input.Children5To18" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <select asp-for="Input.StudentStatus" class="form-select">
-                            <option value="">Select student status</option>
-                            <option value="Full time">Full time</option>
-                            <option value="Part time">Part time</option>
-                            <option value="Traditional student">Traditional student</option>
-                            <option value="Nontraditional student">Nontraditional student</option>
-                        </select>
-                        <label asp-for="Input.StudentStatus">Student Status</label>
-                        <span asp-validation-for="Input.StudentStatus" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <select asp-for="Input.EmploymentStatus" class="form-select">
-                            <option value="">Select employment status</option>
-                            <option value="Full-time">Full-time</option>
-                            <option value="Part-time">Part-time</option>
-                            <option value="Not Employed">Not Employed</option>
-                        </select>
-                        <label asp-for="Input.EmploymentStatus">Your Employment Status</label>
-                        <span asp-validation-for="Input.EmploymentStatus" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <textarea asp-for="Input.HouseholdEmploymentStatus"
-                                  class="form-control textarea-large"
-                                  ></textarea>
-                        <label asp-for="Input.HouseholdEmploymentStatus">
-                            Employment status of everyone over 18 in your household
-                        </label>
-                        <span asp-validation-for="Input.HouseholdEmploymentStatus" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <select asp-for="Input.BenefitsStatus" class="form-select">
-                            <option value="">Select option</option>
-                            <option value="Yes">Yes</option>
-                            <option value="No">No</option>
-                        </select>
-                        <label asp-for="Input.BenefitsStatus">SNAP, TANF, or WIC Benefits</label>
-                        <span asp-validation-for="Input.BenefitsStatus" class="text-danger"></span>
                     </div>
 
                     <!-- Email -->
@@ -195,8 +92,10 @@
                         </div>
                     </div>
 
+
                     <!-- Submit Button -->
                     <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+
                 </form>
             </div>
         </div>
@@ -255,6 +154,7 @@
     </div>
 </div>
 
+
 <style>
     .card-bg {
         background: white;
@@ -262,35 +162,6 @@
         padding: 2.5rem;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         border: none;
-        max-width: 950px;
-        margin: 0 auto;
-    }
-
-    .form-control,
-    .form-select {
-        min-height: 58px;
-        font-size: 1rem;
-    }
-
-    .form-floating > label {
-        color: #5f6b7a;
-        white-space: normal;
-        line-height: 1.2;
-    }
-
-    .textarea-large {
-        min-height: 120px !important;
-        padding-top: 2.2rem !important;
-    }
-
-    h4 {
-        font-weight: 600;
-        color: #1f2937;
-    }
-
-    h5 {
-        font-weight: 600;
-        color: #374151;
     }
 
     .btn-primary {
@@ -302,6 +173,7 @@
             background-color: var(--brand-color-lighter);
             border-color: var(--brand-color-lighter);
         }
+
 </style>
 
 @section Scripts {
@@ -313,6 +185,7 @@
             var modal = bootstrap.Modal.getInstance(document.getElementById('rulesModal'));
             modal.hide();
 
+            // Trigger validation update
             $('@Html.IdFor(m => m.Input.AcceptRules)').trigger('change');
         }
 
@@ -320,8 +193,8 @@
             document.getElementById('@Html.IdFor(m => m.Input.AcceptLiability)').checked = true;
             var modal = bootstrap.Modal.getInstance(document.getElementById('liabilityModal'));
             modal.hide();
-
             $('@Html.IdFor(m => m.Input.AcceptLiability)').trigger('change');
         }
     </script>
+
 }

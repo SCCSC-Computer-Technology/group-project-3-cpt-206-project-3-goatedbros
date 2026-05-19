@@ -9,11 +9,11 @@ using PantryPlatoonMVCMain.Data;
 
 #nullable disable
 
-namespace PantryPlatoonMVCMain.Migrations
+namespace PantryPlatoonMVCMain.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260515124957_FixDatabaseChanges")]
-    partial class FixDatabaseChanges
+    [Migration("20250723000307_AddedCampusIdToDonation")]
+    partial class AddedCampusIdToDonation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -304,7 +304,7 @@ namespace PantryPlatoonMVCMain.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DonationId"));
 
-                    b.Property<int?>("CampusId")
+                    b.Property<int>("CampusId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateDonated")
@@ -358,6 +358,63 @@ namespace PantryPlatoonMVCMain.Migrations
                     b.HasKey("DonorId");
 
                     b.ToTable("Donor");
+                });
+
+            modelBuilder.Entity("PantryPlatoonMVCMain.Models.DonorSubmission", b =>
+                {
+                    b.Property<int>("SubmissionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubmissionId"));
+
+                    b.Property<int?>("CampusId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DonorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("SubmissionDate")
+                        .HasColumnType("date");
+
+                    b.HasKey("SubmissionId");
+
+                    b.HasIndex("CampusId");
+
+                    b.HasIndex("DonorId");
+
+                    b.ToTable("DonorSubmission");
+                });
+
+            modelBuilder.Entity("PantryPlatoonMVCMain.Models.DonorSubmissionItem", b =>
+                {
+                    b.Property<int>("SubmissionItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubmissionItemId"));
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubmissionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SubmissionItemId")
+                        .HasName("PK__DonorSub__BB8633974DEEFD61");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("SubmissionId");
+
+                    b.ToTable("DonorSubmissionItem");
                 });
 
             modelBuilder.Entity("PantryPlatoonMVCMain.Models.Inventory", b =>
@@ -473,7 +530,7 @@ namespace PantryPlatoonMVCMain.Migrations
                     b.HasKey("PageId")
                         .HasName("PK__StaticPa__C565B104383F3B0F");
 
-                    b.ToTable("StaticPages", (string)null);
+                    b.ToTable("StaticPages");
                 });
 
             modelBuilder.Entity("PantryPlatoonMVCMain.Models.Visit", b =>
@@ -548,70 +605,6 @@ namespace PantryPlatoonMVCMain.Migrations
                     b.ToTable("VisitItem");
                 });
 
-            modelBuilder.Entity("PantryPlatoonMVCMain.Models.VolunteerRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<double>("HoursRequested")
-                        .HasColumnType("float");
-
-                    b.Property<string>("JobDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("RequestedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VolunteerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("VolunteerRequests", (string)null);
-                });
-
-            modelBuilder.Entity("PantryPlatoonMVCMain.Models.VolunteerShift", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<double>("HoursTracked")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("ShiftDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TaskDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VolunteerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("VolunteerShifts", (string)null);
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -676,7 +669,9 @@ namespace PantryPlatoonMVCMain.Migrations
                 {
                     b.HasOne("PantryPlatoonMVCMain.Models.Campus", "Campus")
                         .WithMany()
-                        .HasForeignKey("CampusId");
+                        .HasForeignKey("CampusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PantryPlatoonMVCMain.Models.Donor", "Donor")
                         .WithMany("Donations")
@@ -687,6 +682,44 @@ namespace PantryPlatoonMVCMain.Migrations
                     b.Navigation("Campus");
 
                     b.Navigation("Donor");
+                });
+
+            modelBuilder.Entity("PantryPlatoonMVCMain.Models.DonorSubmission", b =>
+                {
+                    b.HasOne("PantryPlatoonMVCMain.Models.Campus", "Campus")
+                        .WithMany("DonorSubmissions")
+                        .HasForeignKey("CampusId");
+
+                    b.HasOne("PantryPlatoonMVCMain.Models.ApplicationUser", "Donor")
+                        .WithMany("DonorSubmissions")
+                        .HasForeignKey("DonorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Campus");
+
+                    b.Navigation("Donor");
+                });
+
+            modelBuilder.Entity("PantryPlatoonMVCMain.Models.DonorSubmissionItem", b =>
+                {
+                    b.HasOne("PantryPlatoonMVCMain.Models.Item", "Item")
+                        .WithMany("DonorSubmissionItems")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK__DonorSubm__ItemI__619B8048");
+
+                    b.HasOne("PantryPlatoonMVCMain.Models.DonorSubmission", "Submission")
+                        .WithMany("DonorSubmissionItems")
+                        .HasForeignKey("SubmissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK__DonorSubm__Submi__60A75C0F");
+
+                    b.Navigation("Item");
+
+                    b.Navigation("Submission");
                 });
 
             modelBuilder.Entity("PantryPlatoonMVCMain.Models.Inventory", b =>
@@ -752,11 +785,15 @@ namespace PantryPlatoonMVCMain.Migrations
 
             modelBuilder.Entity("PantryPlatoonMVCMain.Models.ApplicationUser", b =>
                 {
+                    b.Navigation("DonorSubmissions");
+
                     b.Navigation("Visits");
                 });
 
             modelBuilder.Entity("PantryPlatoonMVCMain.Models.Campus", b =>
                 {
+                    b.Navigation("DonorSubmissions");
+
                     b.Navigation("Inventories");
 
                     b.Navigation("Users");
@@ -769,8 +806,15 @@ namespace PantryPlatoonMVCMain.Migrations
                     b.Navigation("Donations");
                 });
 
+            modelBuilder.Entity("PantryPlatoonMVCMain.Models.DonorSubmission", b =>
+                {
+                    b.Navigation("DonorSubmissionItems");
+                });
+
             modelBuilder.Entity("PantryPlatoonMVCMain.Models.Item", b =>
                 {
+                    b.Navigation("DonorSubmissionItems");
+
                     b.Navigation("Inventories");
 
                     b.Navigation("VisitItems");

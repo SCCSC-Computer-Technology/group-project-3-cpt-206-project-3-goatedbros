@@ -5,12 +5,14 @@
 @{
     var isAdmin = User.IsInRole("Admin");
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Pantry Platoon</title>
+    <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/PantryPlatoonMVCMain.styles.css" asp-append-version="true" />
@@ -31,9 +33,15 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        <!--<li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>-->
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Inventory" asp-action="Index">Inventory</a>
                         </li>
+                        <!--<li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="About" asp-action="Index">About</a>
+                        </li>-->
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Contact" asp-action="Index">Contact</a>
                         </li>
@@ -52,20 +60,14 @@
                                     Admin
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="testDropdown">
+                                    <!--<li class="dropdown-item-li"><a class="dropdown-item" asp-controller="Items" asp-action="Index">Items</a></li>-->
                                     <li class="dropdown-item-li"><a class="dropdown-item" asp-controller="Visit" asp-action="Index">Visits</a></li>
                                     <li class="dropdown-item-li"><a class="dropdown-item" asp-controller="Campus" asp-action="Index">Campus</a></li>
                                     <li class="dropdown-item-li"><a class="dropdown-item" asp-controller="Donors" asp-action="Index">Donors</a></li>
                                     <li class="dropdown-item-li"><a class="dropdown-item" asp-controller="User" asp-action="Index">Manage Users</a></li>
-
                                     <li class="dropdown-item-li"><a class="dropdown-item" asp-controller="Volunteer" asp-action="ManageRequests">Manage Volunteer Requests</a></li>
-
                                     <li class="dropdown-item-li"><a class="dropdown-item" asp-controller="StaticPages" asp-action="Index">Manage Static Pages</a></li>
                                     <li class="dropdown-item-li"><a class="dropdown-item" asp-controller="Inventory" asp-action="Manage">Manage Inventory</a></li>
-                                    <li>
-                                        <a class="dropdown-item" href="/Documentation">
-                                            Documentation
-                                        </a>
-                                    </li>
                                     <li class="dropdown-item-li">
                                         <form asp-controller="Admin" asp-action="Index" method="post">
                                             <button type="submit" class="dropdown-item">Admin Control Panel</button>
@@ -74,6 +76,7 @@
                                 </ul>
                             </li>
                         }
+
                     </ul>
                 </nav>
                 <div class="user-actions">
@@ -86,7 +89,6 @@
             </div>
         </div>
     </header>
-
     <div class="container">
         <main class="flex-grow-1">
             <div class="container py-3">
@@ -94,7 +96,6 @@
             </div>
         </main>
     </div>
-
     <footer class="site-footer mt-auto py-3 text-white">
         <div class="container text-center">
             <div class="mb-2">
@@ -107,27 +108,17 @@
             </div>
         </div>
     </footer>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-
-    <style>
-        .dropdown-menu .dropdown-item-li {
-        margin-left: 0px !important;
-        }
-
-        .footer-link {
-        color: white;
-        text-decoration: none;
-        margin: 0 10px;
-        }
-
-        .footer-link:hover {
-        text-decoration: underline;
-        }
-    </style>
 </body>
+
+<style>
+    .dropdown-menu .dropdown-item-li {
+        margin-left: 0px !important;
+    }
+</style>
+
 </html>
