@@ -1,10 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\PantryPlatoonMVCMain",
-    "\\PantryPlatoonMVCMain\\Views",
-    "\\PantryPlatoonMVCMain\\Views\\Volunteer"
+    "\\PantryPlatoonMVCMain"
   ],
-  "SelectedNode": "\\PantryPlatoonMVCMain\\Views\\Volunteer\\ManageRequests.cshtml",
+  "SelectedNode": "\\PantryPlatoonMVCMain\\PantryPlatoonMVCMain.csproj",
   "PreviewInSolutionExplorer": false
 }

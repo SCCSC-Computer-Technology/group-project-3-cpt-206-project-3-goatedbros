@@ -57,6 +57,7 @@ namespace PantryPlatoonMVCMain.Models
 
         public string? AdditionalNotes { get; set; }
 
+        public int Points { get; set; } = 50;
 
     }
 }

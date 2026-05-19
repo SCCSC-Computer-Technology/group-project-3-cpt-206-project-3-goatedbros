@@ -275,6 +275,9 @@ namespace PantryPlatoonMVCMain.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
+
                     b.Property<string>("SCCId")
                         .HasColumnType("nvarchar(max)");
 
@@ -335,6 +338,59 @@ namespace PantryPlatoonMVCMain.Migrations
                     b.ToTable("Campus");
                 });
 
+            modelBuilder.Entity("PantryPlatoonMVCMain.Models.DocumentationUpload", b =>
+                {
+                    b.Property<int>("DocumentationUploadId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DocumentationUploadId"));
+
+                    b.Property<string>("ContentType")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<long>("FileSizeBytes")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("OriginalFileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("StoredFileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<DateTime>("UploadedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("(getdate())");
+
+                    b.Property<string>("UploadedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("DocumentationUploadId");
+
+                    b.ToTable("DocumentationUploads", (string)null);
+                });
+
             modelBuilder.Entity("PantryPlatoonMVCMain.Models.Donation", b =>
                 {
                     b.Property<int>("DonationId")
@@ -369,7 +425,7 @@ namespace PantryPlatoonMVCMain.Migrations
 
                     b.HasIndex("DonorId");
 
-                    b.ToTable("Donation");
+                    b.ToTable("Donations", (string)null);
                 });
 
             modelBuilder.Entity("PantryPlatoonMVCMain.Models.Donor", b =>
@@ -396,7 +452,7 @@ namespace PantryPlatoonMVCMain.Migrations
 
                     b.HasKey("DonorId");
 
-                    b.ToTable("Donor");
+                    b.ToTable("Donors", (string)null);
                 });
 
             modelBuilder.Entity("PantryPlatoonMVCMain.Models.Inventory", b =>

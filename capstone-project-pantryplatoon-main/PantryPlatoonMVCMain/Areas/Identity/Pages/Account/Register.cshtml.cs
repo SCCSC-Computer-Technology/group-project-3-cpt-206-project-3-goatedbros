@@ -11,7 +11,6 @@ using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -55,62 +54,33 @@ namespace PantryPlatoonMVCMain.Areas.Identity.Pages.Account
             _context = context;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public string ReturnUrl { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
         public SelectList CampusList { get; set; } = new SelectList(new List<Campus>(), "CampusId", "CampusName");
+
         public StaticPage RulesPage { get; set; }
+
         public StaticPage LiabilityPage { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
-            /// 
-
-            /// <summary>
-            ///     SCC Student ID
-            /// </summary>
             [Required]
             [StringLength(7)]
             [RegularExpression(@"^\d{7}$", ErrorMessage = "SCC ID must be 7 digits.")]
             [Display(Name = "SCC ID")]
             public string SCCId { get; set; }
 
-            /// <summary>
-            ///     Student First Name
-            /// </summary>
             [Required]
             [StringLength(100)]
             [RegularExpression(@"^[A-Za-z\s'-]+$", ErrorMessage = "Only letters, spaces, apostrophes, and hyphens are allowed.")]
             [Display(Name = "First Name")]
             public string FirstName { get; set; }
 
-            /// <summary>
-            ///     Student Last Name
-            /// </summary>
             [Required]
             [StringLength(100)]
             [RegularExpression(@"^[A-Za-z\s'-]+$", ErrorMessage = "Only letters, spaces, apostrophes, and hyphens are allowed.")]
@@ -126,25 +96,16 @@ namespace PantryPlatoonMVCMain.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-
 
             [Required]
             [Range(typeof(bool), "true", "true", ErrorMessage = "You must accept the pantry rules to register.")]
@@ -155,6 +116,7 @@ namespace PantryPlatoonMVCMain.Areas.Identity.Pages.Account
             [Range(typeof(bool), "true", "true", ErrorMessage = "You must accept the liability waiver to register.")]
             [Display(Name = "I have read and agree to the liability waiver")]
             public bool AcceptLiability { get; set; }
+
             [Required]
             [Range(16, 100)]
             [Display(Name = "Age")]
@@ -191,7 +153,6 @@ namespace PantryPlatoonMVCMain.Areas.Identity.Pages.Account
             [Display(Name = "Kitchen Access")]
             public string KitchenAccess { get; set; }
 
-            [Required]
             [Display(Name = "Dietary Restrictions")]
             public bool HasDietaryRestrictions { get; set; }
 
@@ -206,14 +167,13 @@ namespace PantryPlatoonMVCMain.Areas.Identity.Pages.Account
 
             [Display(Name = "Additional Notes")]
             public string AdditionalNotes { get; set; }
-
         }
-
 
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             await LoadCampusListAsync();
             await LoadStaticPagesAsync();
         }
@@ -227,7 +187,6 @@ namespace PantryPlatoonMVCMain.Areas.Identity.Pages.Account
             await LoadCampusListAsync();
             await LoadStaticPagesAsync();
 
-            // Check if SCCId already exists
             var existingUser = await _userManager.Users
                 .FirstOrDefaultAsync(u => u.SCCId == Input.SCCId);
 
@@ -264,6 +223,7 @@ namespace PantryPlatoonMVCMain.Areas.Identity.Pages.Account
                 user.SpecialtyItemsNeeded = Input.SpecialtyItemsNeeded;
                 user.SpecialtyItemsExplanation = Input.SpecialtyItemsExplanation;
                 user.AdditionalNotes = Input.AdditionalNotes;
+                user.Points = 50;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -350,6 +310,7 @@ namespace PantryPlatoonMVCMain.Areas.Identity.Pages.Account
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
+
             return (IUserEmailStore<ApplicationUser>)_userStore;
         }
     }
