@@ -8467,11 +8467,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Vasse\\Downloads\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\PantryPlatoonMVCMain.csproj",
+      "projectUniqueName": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\PantryPlatoonMVCMain.csproj",
       "projectName": "PantryPlatoonMVCMain",
-      "projectPath": "C:\\Users\\Vasse\\Downloads\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\PantryPlatoonMVCMain.csproj",
+      "projectPath": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\PantryPlatoonMVCMain.csproj",
       "packagesPath": "C:\\Users\\Vasse\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Vasse\\Downloads\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\obj\\",
+      "outputPath": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

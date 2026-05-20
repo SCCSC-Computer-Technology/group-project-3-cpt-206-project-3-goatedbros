@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PantryPlatoonMVCMain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+53cef2afc7839cf94e6bfd24a924263a16faadf6")]
 [assembly: System.Reflection.AssemblyProductAttribute("PantryPlatoonMVCMain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PantryPlatoonMVCMain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

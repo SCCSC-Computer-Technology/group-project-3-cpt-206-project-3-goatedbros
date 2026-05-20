@@ -61,10 +61,11 @@
 
                                     <li class="dropdown-item-li"><a class="dropdown-item" asp-controller="StaticPages" asp-action="Index">Manage Static Pages</a></li>
                                     <li class="dropdown-item-li"><a class="dropdown-item" asp-controller="Inventory" asp-action="Manage">Manage Inventory</a></li>
-                                    <li>
-                                        <a class="dropdown-item" href="/Documentation">
-                                            Documentation
-                                        </a>
+                                    <li class="dropdown-item-li">
+                                        <a class="dropdown-item" asp-page="/Documentation/Index">Documentation</a>
+                                    </li>
+                                    <li class="dropdown-item-li">
+                                        <a class="dropdown-item" asp-page="/Dashboard/Index">Dashboard</a>
                                     </li>
                                     <li class="dropdown-item-li">
                                         <form asp-controller="Admin" asp-action="Index" method="post">

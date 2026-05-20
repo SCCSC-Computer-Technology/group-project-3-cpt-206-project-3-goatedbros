@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UqTlutsjt/s=",
+  "dgSpecHash": "2Th7NC7yt24=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Vasse\\Downloads\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\PantryPlatoonMVCMain.csproj",
+  "projectFilePath": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\PantryPlatoonMVCMain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Vasse\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Vasse\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

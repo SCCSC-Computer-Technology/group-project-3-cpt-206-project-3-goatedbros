@@ -1,0 +1,305 @@
+﻿@page
+@model PantryPlatoonMVCMain.Pages.Dashboard.IndexModel
+@using System.Text.Json
+@{
+    ViewData["Title"] = "Demographics Dashboard";
+    Layout = "_Layout";
+    var ageChartItems = Model.AgeBreakdown
+        .Where(x => x.Count > 0)
+        .ToList();
+    var ageLabelsJson = JsonSerializer.Serialize(ageChartItems.Select(x => x.Label));
+    var ageCountsJson = JsonSerializer.Serialize(ageChartItems.Select(x => x.Count));
+}
+<style>
+    .dashboard-hero {
+        background: linear-gradient(135deg, #2f3f78, #24315f);
+        color: white;
+        border-radius: 16px;
+        padding: 2.25rem 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+    }
+
+        .dashboard-hero h1 {
+            font-weight: 700;
+            margin-bottom: 0.35rem;
+        }
+
+        .dashboard-hero p {
+            margin-bottom: 0;
+            opacity: 0.95;
+            font-size: 1.05rem;
+        }
+
+    .stat-card {
+        border: none;
+        border-radius: 16px;
+        padding: 1.4rem;
+        background-color: white;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+        height: 100%;
+    }
+
+    .stat-label {
+        font-size: 0.95rem;
+        color: #667085;
+        font-weight: 600;
+        margin-bottom: 0.4rem;
+    }
+
+    .stat-value {
+        font-size: 2.1rem;
+        font-weight: 700;
+        color: #24315f;
+        margin: 0;
+    }
+
+    .dashboard-card {
+        border: none;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+        height: 100%;
+        background-color: white;
+    }
+
+        .dashboard-card .card-header {
+            background-color: #2f3f78;
+            color: white;
+            font-weight: 600;
+            font-size: 1.05rem;
+            padding: 1rem 1.25rem;
+        }
+
+        .dashboard-card .card-body {
+            padding: 1.25rem;
+        }
+
+    .dashboard-table th {
+        color: #24315f;
+        background-color: #eef1f8;
+    }
+
+    .dashboard-table td,
+    .dashboard-table th {
+        vertical-align: middle;
+    }
+
+    .household-summary {
+        background-color: #f4f6fb;
+        border-left: 5px solid #2f3f78;
+        border-radius: 12px;
+        padding: 1.25rem;
+        margin-bottom: 2rem;
+    }
+
+        .household-summary h5 {
+            font-weight: 700;
+            color: #24315f;
+            margin-bottom: 1rem;
+        }
+
+    .household-number {
+        font-size: 1.9rem;
+        font-weight: 700;
+        color: #2f3f78;
+        margin-bottom: 0;
+    }
+
+    .household-label {
+        color: #667085;
+        font-size: 0.95rem;
+        margin-bottom: 0;
+    }
+
+    .chart-wrapper {
+        max-width: 420px;
+        margin: 0 auto;
+        padding: 1rem 0;
+    }
+
+    .no-chart-data {
+        text-align: center;
+        color: #667085;
+        padding: 2rem 0;
+    }
+</style>
+<div class="container mt-5 mb-5">
+    <div class="dashboard-hero">
+        <h1>Demographics Dashboard</h1>
+        <p>Review pantry user demographics, household needs, and student support trends.</p>
+    </div>
+    <div class="row g-4 mb-4">
+        <div class="col-md-6 col-xl-3">
+            <div class="stat-card">
+                <div class="stat-label">Total Registered Users</div>
+                <p class="stat-value">@Model.TotalUsers</p>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3">
+            <div class="stat-card">
+                <div class="stat-label">Average Age</div>
+                <p class="stat-value">@Model.AverageAge</p>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3">
+            <div class="stat-card">
+                <div class="stat-label">Dietary Restrictions</div>
+                <p class="stat-value">@Model.UsersWithDietaryRestrictions</p>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3">
+            <div class="stat-card">
+                <div class="stat-label">Need Specialty Items</div>
+                <p class="stat-value">@Model.UsersNeedingSpecialtyItems</p>
+            </div>
+        </div>
+    </div>
+    <div class="household-summary">
+        <h5>Household Summary</h5>
+        <div class="row text-center g-3">
+            <div class="col-md-4">
+                <p class="household-number">@Model.TotalAdultsInHouseholds</p>
+                <p class="household-label">Adults in Households</p>
+            </div>
+            <div class="col-md-4">
+                <p class="household-number">@Model.TotalChildrenUnder5</p>
+                <p class="household-label">Children Under 5</p>
+            </div>
+            <div class="col-md-4">
+                <p class="household-number">@Model.TotalChildren5To18</p>
+                <p class="household-label">Children Ages 5 to 18</p>
+            </div>
+        </div>
+    </div>
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card dashboard-card">
+                <div class="card-header">Users by Campus</div>
+                <div class="card-body">
+                    <table class="table table-bordered table-hover dashboard-table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Campus</th>
+                                <th class="text-center">Users</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.CampusBreakdown)
+                            {
+                                <tr>
+                                    <td>@item.Label</td>
+                                    <td class="text-center fw-semibold">@item.Count</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card dashboard-card">
+                <div class="card-header">Age Breakdown</div>
+                <div class="card-body">
+                    @if (ageChartItems.Any())
+                    {
+                        <div class="chart-wrapper">
+                            <canvas id="agePieChart"></canvas>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="no-chart-data">
+                            No age data available.
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card dashboard-card">
+                <div class="card-header">Student Status</div>
+                <div class="card-body">
+                    <table class="table table-bordered table-hover dashboard-table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th class="text-center">Users</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.StudentStatusBreakdown)
+                            {
+                                <tr>
+                                    <td>@item.Label</td>
+                                    <td class="text-center fw-semibold">@item.Count</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card dashboard-card">
+                <div class="card-header">Employment Status</div>
+                <div class="card-body">
+                    <table class="table table-bordered table-hover dashboard-table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th class="text-center">Users</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.EmploymentStatusBreakdown)
+                            {
+                                <tr>
+                                    <td>@item.Label</td>
+                                    <td class="text-center fw-semibold">@item.Count</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@if (ageChartItems.Any())
+{
+    <script>
+        const ageLabels = @Html.Raw(ageLabelsJson);
+        const ageCounts = @Html.Raw(ageCountsJson);
+        const ageCtx = document.getElementById('agePieChart').getContext('2d');
+        new Chart(ageCtx, {
+        type: 'pie',
+        data: {
+        labels: ageLabels,
+        datasets: [{
+        data: ageCounts,
+        backgroundColor: [
+        '#2f3f78',
+        '#4f6db8',
+        '#6f86c9',
+        '#8fa2d8',
+        '#b2bee8',
+        '#d3daf2',
+        '#8795bf'
+        ],
+        borderColor: '#ffffff',
+        borderWidth: ageCounts.length > 1 ? 1 : 0
+        }]
+        },
+        options: {
+        responsive: true,
+        plugins: {
+        legend: {
+        position: 'bottom'
+        }
+        }
+        }
+        });
+    </script>
+}

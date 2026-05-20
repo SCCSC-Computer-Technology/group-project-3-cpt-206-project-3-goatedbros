@@ -1,25 +1,61 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Vasse\\Downloads\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\",
+  "WorkspaceRootPath": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|c:\\users\\vasse\\downloads\\capstone-project-pantryplatoon-main\\pantryplatoonmvcmain\\areas\\identity\\pages\\account\\register.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|c:\\users\\vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\pantryplatoonmvcmain\\pages\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|solutionrelative:pages\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|c:\\users\\vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\pantryplatoonmvcmain\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|c:\\users\\vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\pantryplatoonmvcmain\\pages\\dashboard\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|solutionrelative:pages\\dashboard\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|c:\\users\\vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\pantryplatoonmvcmain\\pages\\documentation\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|solutionrelative:pages\\documentation\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|c:\\users\\vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\pantryplatoonmvcmain\\pages\\documentation\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|solutionrelative:pages\\documentation\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|c:\\users\\vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\pantryplatoonmvcmain\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|c:\\users\\vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\pantryplatoonmvcmain\\pages\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|solutionrelative:pages\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|c:\\users\\vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\pantryplatoonmvcmain\\models\\documentationupload.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|solutionrelative:models\\documentationupload.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|c:\\users\\vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\pantryplatoonmvcmain\\controllers\\inventorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|solutionrelative:controllers\\inventorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|c:\\users\\vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\pantryplatoonmvcmain\\areas\\identity\\pages\\account\\register.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|solutionrelative:areas\\identity\\pages\\account\\register.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|c:\\users\\vasse\\downloads\\capstone-project-pantryplatoon-main\\pantryplatoonmvcmain\\areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|c:\\users\\vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\pantryplatoonmvcmain\\areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|solutionrelative:areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|c:\\users\\vasse\\downloads\\capstone-project-pantryplatoon-main\\pantryplatoonmvcmain\\models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|c:\\users\\vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\pantryplatoonmvcmain\\models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|solutionrelative:models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|c:\\users\\vasse\\downloads\\capstone-project-pantryplatoon-main\\pantryplatoonmvcmain\\areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|c:\\users\\vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\pantryplatoonmvcmain\\areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|solutionrelative:areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|c:\\users\\vasse\\downloads\\capstone-project-pantryplatoon-main\\pantryplatoonmvcmain\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "AbsoluteMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|c:\\users\\vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\pantryplatoonmvcmain\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{DA331933-A297-4075-BEFC-872008B198FF}|PantryPlatoonMVCMain.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
@@ -30,35 +66,33 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 18,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 9,
               "Title": "Register.cshtml.cs",
-              "DocumentMoniker": "C:\\Users\\Vasse\\Downloads\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
               "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
-              "ToolTip": "C:\\Users\\Vasse\\Downloads\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
+              "ToolTip": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
               "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
               "ViewState": "AgIAALMAAAAAAAAAAAAnwL0AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-18T20:20:13.821Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 11,
               "Title": "ApplicationUser.cs",
-              "DocumentMoniker": "C:\\Users\\Vasse\\Downloads\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Models\\ApplicationUser.cs",
+              "DocumentMoniker": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Models\\ApplicationUser.cs",
               "RelativeDocumentMoniker": "Models\\ApplicationUser.cs",
-              "ToolTip": "C:\\Users\\Vasse\\Downloads\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Models\\ApplicationUser.cs",
+              "ToolTip": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Models\\ApplicationUser.cs",
               "RelativeToolTip": "Models\\ApplicationUser.cs",
               "ViewState": "AgIAADEAAAAAAAAAAAAzwD0AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-18T20:33:07.235Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -119,41 +153,155 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Register.cshtml",
-              "DocumentMoniker": "C:\\Users\\Vasse\\Downloads\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
-              "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Register.cshtml",
-              "ToolTip": "C:\\Users\\Vasse\\Downloads\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
-              "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Register.cshtml",
-              "ViewState": "AgIAAF8BAAAAAAAAAAAkwHUBAAABAAAAAAAAAA==",
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAADAAAAAAAAAAAAAAAEMAAABmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-18T20:20:08.427Z",
+              "WhenOpened": "2026-05-20T14:57:49.766Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Login.cshtml",
-              "DocumentMoniker": "C:\\Users\\Vasse\\Downloads\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
-              "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Login.cshtml",
-              "ToolTip": "C:\\Users\\Vasse\\Downloads\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
-              "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Login.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Pages\\Dashboard\\Index.cshtml.cs",
+              "RelativeDocumentMoniker": "Pages\\Dashboard\\Index.cshtml.cs",
+              "ToolTip": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Pages\\Dashboard\\Index.cshtml.cs",
+              "RelativeToolTip": "Pages\\Dashboard\\Index.cshtml.cs",
+              "ViewState": "AgIAAFsAAAAAAAAAAAAkwGsAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-20T14:56:47.59Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Pages\\Dashboard\\Index.cshtml",
+              "RelativeDocumentMoniker": "Pages\\Dashboard\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Pages\\Dashboard\\Index.cshtml",
+              "RelativeToolTip": "Pages\\Dashboard\\Index.cshtml",
+              "ViewState": "AgIAAPYAAAAAAAAAAAAkwP8AAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-18T20:20:07.05Z",
+              "WhenOpened": "2026-05-20T14:56:26.72Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
+              "Title": "Index.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Pages\\Documentation\\Index.cshtml.cs",
+              "RelativeDocumentMoniker": "Pages\\Documentation\\Index.cshtml.cs",
+              "ToolTip": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Pages\\Documentation\\Index.cshtml.cs",
+              "RelativeToolTip": "Pages\\Documentation\\Index.cshtml.cs",
+              "ViewState": "AgIAAGcAAAAAAAAAAAAkwIYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-20T14:53:26.33Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "_ViewImports.cshtml",
+              "DocumentMoniker": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Pages\\_ViewImports.cshtml",
+              "RelativeDocumentMoniker": "Pages\\_ViewImports.cshtml",
+              "ToolTip": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Pages\\_ViewImports.cshtml",
+              "RelativeToolTip": "Pages\\_ViewImports.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-20T14:49:11.241Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAYAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-20T14:41:04.077Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Pages\\Documentation\\Index.cshtml",
+              "RelativeDocumentMoniker": "Pages\\Documentation\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Pages\\Documentation\\Index.cshtml",
+              "RelativeToolTip": "Pages\\Documentation\\Index.cshtml",
+              "ViewState": "AgIAAM4AAAAAAAAAAAAIwOwAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-20T14:15:53.41Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "DocumentationUpload.cs",
+              "DocumentMoniker": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Models\\DocumentationUpload.cs",
+              "RelativeDocumentMoniker": "Models\\DocumentationUpload.cs",
+              "ToolTip": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Models\\DocumentationUpload.cs",
+              "RelativeToolTip": "Models\\DocumentationUpload.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-20T14:14:56.754Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "InventoryController.cs",
+              "DocumentMoniker": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Controllers\\InventoryController.cs",
+              "RelativeDocumentMoniker": "Controllers\\InventoryController.cs",
+              "ToolTip": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Controllers\\InventoryController.cs",
+              "RelativeToolTip": "Controllers\\InventoryController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-20T12:22:14.098Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Register.cshtml",
+              "DocumentMoniker": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "ToolTip": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "ViewState": "AgIAAF8BAAAAAAAAAAAkwHUBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-18T20:20:08.427Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "ToolTip": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-18T20:20:07.05Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
               "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Vasse\\Downloads\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\Vasse\\Downloads\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\appsettings.json",
+              "ToolTip": "C:\\Users\\Vasse\\source\\repos\\group-project-3-cpt-206-project-3-goatedbros3\\capstone-project-pantryplatoon-main\\PantryPlatoonMVCMain\\appsettings.json",
               "RelativeToolTip": "appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-05-18T20:18:51.064Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-18T20:18:51.064Z"
             }
           ]
         }
